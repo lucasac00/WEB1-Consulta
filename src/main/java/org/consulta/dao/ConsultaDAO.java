@@ -72,7 +72,7 @@ public class ConsultaDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setString(1, consulta.getId());
+            statement.setInt(1, consulta.getId());
             statement.executeUpdate();
 
             statement.close();
