@@ -6,8 +6,18 @@ public class Paciente {
     private String cpf;
     private String nome;
     private String telefone;
-    private char sexo;
-    private Date dataNascimento;
+    private String sexo;
+    private String dataNascimento;
+
+    public Paciente(String email, String senha, String cpf, String nome, String telefone, String sexo, String dataNascimento) {
+        this.email = email;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.sexo = sexo;
+        this.dataNascimento = dataNascimento;
+    }
 
     public String getEmail() {
         return email;
@@ -49,19 +59,19 @@ public class Paciente {
         this.telefone = telefone;
     }
 
-    public char getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(char sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
-    public Date getDataNascimento() {
+    public String getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 }

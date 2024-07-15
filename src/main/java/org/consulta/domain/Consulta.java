@@ -4,7 +4,14 @@ public class Consulta {
     private int id;
     private String cpfPaciente;
     private String crmMedico;
-    private Timestamp dataHora;
+    private String dataHora;
+
+    public Consulta(int id, String cpfPaciente, String crmMedico, String dataHora) {
+        this.id = id;
+        this.cpfPaciente = cpfPaciente;
+        this.crmMedico = crmMedico;
+        this.dataHora = dataHora;
+    }
 
     public int getId() {
         return id;
@@ -30,11 +37,11 @@ public class Consulta {
         this.crmMedico = crmMedico;
     }
 
-    public Timestamp getDataHora() {
+    public String getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(Timestamp dataHora) {
+    public void setDataHora(String dataHora) {
         this.dataHora = dataHora;
     }
 }

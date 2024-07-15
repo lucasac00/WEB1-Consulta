@@ -8,6 +8,14 @@ public class Medico {
     private String nome;
     private String especialidade;
 
+    public Medico(String email, String senha, String crm, String nome, String especialidade) {
+        this.email = email;
+        this.senha = senha;
+        this.crm = crm;
+        this.nome = nome;
+        this.especialidade = especialidade;
+    }
+
     public String getEmail() {
         return email;
     }

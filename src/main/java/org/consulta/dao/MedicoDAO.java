@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufscar.dc.dsw.domain.Medico;
+import org.consulta.domain.Medico;
 
 // Rever o update, pois do jeito que esta nao da para alterar o email
 
@@ -39,7 +39,7 @@ public class MedicoDAO extends GenericDAO {
 
     public List<Medico> getAll() {
 
-        List<Medico> listaMedicos = new ArrayList<>();
+        List<Medico> listaMedicos = new ArrayList<Medico>();
 
         String sql = "SELECT * from Medico";
 

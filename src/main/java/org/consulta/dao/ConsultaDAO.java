@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import br.ufscar.dc.dsw.domain.Consulta;
+import org.consulta.domain.Consulta;
 
 public class ConsultaDAO extends GenericDAO {
 
@@ -24,7 +25,7 @@ public class ConsultaDAO extends GenericDAO {
             statement.setInt(1, consulta.getId());
             statement.setString(2, consulta.getCpfPaciente());
             statement.setString(3, consulta.getCrmMedico());
-            statement.setTimestamp(4, consulta.getDataHora());
+            statement.setString(4, consulta.getDataHora());
             statement.executeUpdate();
 
             statement.close();
@@ -36,7 +37,7 @@ public class ConsultaDAO extends GenericDAO {
 
     public List<Consulta> getAll() {
 
-        List<Consulta> listaConsultas = new ArrayList<>();
+        List<Consulta> listaConsultas = new ArrayList<Consulta>();
 
         String sql = "SELECT * from Consulta";
 
@@ -46,10 +47,10 @@ public class ConsultaDAO extends GenericDAO {
 
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                String id = resultSet.getInt("id");
+                int id = resultSet.getInt("id");
                 String cpfPaciente = resultSet.getString("cpfPaciente");
                 String crmMedico = resultSet.getString("crmMedico");
-                String dataHora = resultSet.getTimestamp("dataHora");
+                String dataHora = resultSet.getString("dataHora");
 
                 Consulta consulta = new Consulta(id, cpfPaciente, crmMedico, dataHora);
                 listaConsultas.add(consulta);
@@ -91,7 +92,7 @@ public class ConsultaDAO extends GenericDAO {
 
             statement.setString(1, consulta.getCpfPaciente());
             statement.setString(2, consulta.getCrmMedico());
-            statement.setTimestamp(3, consulta.getDataHora());
+            statement.setString(3, consulta.getDataHora());
             statement.setInt(4, consulta.getId());
             
             statement.executeUpdate();
@@ -103,7 +104,7 @@ public class ConsultaDAO extends GenericDAO {
         }
     }
 
-    public Consulta get(Long id) {
+    public Consulta get(int id) {
         Consulta consulta = null;
         
         String sql = "SELECT * from Consulta where id = ?";
@@ -117,7 +118,7 @@ public class ConsultaDAO extends GenericDAO {
             if (resultSet.next()) {
                 String cpfPaciente = resultSet.getString("cpfPaciente");
                 String crmMedico = resultSet.getString("crmMedico");
-                String dataHora = resultSet.getTimestamp("dataHora");
+                String dataHora = resultSet.getString("dataHora");
 
                 consulta = new Consulta(id, cpfPaciente, crmMedico, dataHora);
             }

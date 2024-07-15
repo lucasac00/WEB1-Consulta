@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import br.ufscar.dc.dsw.domain.Paciente;
+import org.consulta.domain.Paciente;
 
 // Rever o update, pois do jeito que esta nao da para alterar o email
 
@@ -29,7 +30,7 @@ public class PacienteDAO extends GenericDAO {
             statement.setString(4, paciente.getNome());
             statement.setString(5, paciente.getTelefone());
             statement.setString(6, paciente.getSexo());
-            statement.setDate(7, paciente.getDataNascimento());
+            statement.setString(7, paciente.getDataNascimento());
             statement.executeUpdate();
 
             statement.close();
@@ -41,7 +42,7 @@ public class PacienteDAO extends GenericDAO {
 
     public List<Paciente> getAll() {
 
-        List<Paciente> listaPacientes = new ArrayList<>();
+        List<Paciente> listaPacientes = new ArrayList<Paciente>();
 
         String sql = "SELECT * from Paciente";
 
@@ -57,7 +58,7 @@ public class PacienteDAO extends GenericDAO {
                 String nome = resultSet.getString("nome");
                 String telefone = resultSet.getString("telefone");
                 String sexo = resultSet.getString("sexo");
-                String data_nascimento = resultSet.getDate("data_nascimento");
+                String data_nascimento = resultSet.getString("data_nascimento");
 
                 Paciente paciente = new Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento);
                 listaPacientes.add(paciente);
@@ -102,7 +103,7 @@ public class PacienteDAO extends GenericDAO {
             statement.setString(3, paciente.getNome());
             statement.setString(4, paciente.getTelefone());
             statement.setString(5, paciente.getSexo());
-            statement.setDate(6, paciente.getDataNascimento());
+            statement.setString(6, paciente.getDataNascimento());
             statement.setString(7, paciente.getEmail());
             
             statement.executeUpdate();
@@ -131,7 +132,7 @@ public class PacienteDAO extends GenericDAO {
                 String nome = resultSet.getString("nome");
                 String telefone = resultSet.getString("telefone");
                 String sexo = resultSet.getString("sexo");
-                String data_nascimento = resultSet.getDate("data_nascimento");
+                String data_nascimento = resultSet.getString("data_nascimento");
 
                 paciente = new Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento);
             }
