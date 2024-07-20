@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UsuarioDAO extends GenericDAO {
 
-    public void insert (Usuario usuario) throws SQLException {
+    public void insert (Usuario usuario){
         String sql = "INSERT INTO Usuario (login, senha, cargo, nome_display) VALUES (?,?,?,?,?)";
 
         try {

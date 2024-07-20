@@ -1,7 +1,9 @@
 package org.consulta.controller;
 
 import com.sun.net.httpserver.Request;
+import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
+import org.consulta.domain.Consulta;
 import org.consulta.domain.Medico;
 import org.consulta.domain.Usuario;
 import org.consulta.util.Erro;
@@ -20,11 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 public class MedicoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private MedicoDAO dao;
+    private MedicoDAO medicoDao;
+    private ConsultaDAO consultaDao;
 
     @Override
     public void init(){
-        dao = new MedicoDAO();
+        medicoDao = new MedicoDAO();
+        consultaDao = new ConsultaDAO();
     }
 
     @Override
@@ -34,14 +38,13 @@ public class MedicoController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //Cargo de usuario "admin" = Médico
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
         Erro erros = new Erro();
 
         if (usuario == null){
             response.sendRedirect(request.getContextPath());
             return;
-        } else if (!usuario.getCargo().equals("admin")) {
+        } else if (!usuario.getCargo().equals("medico")) {
             erros.add("Acesso não autorizado - Cargo incorreto");
             erros.add("Apenas médicos tem acesso a essa página.");
             request.setAttribute("mensagens", erros);
@@ -72,9 +75,6 @@ public class MedicoController extends HttpServlet {
                 case "/atualizacao":
                     atualiza(request, response);
                     break;
-                case "/especialistas":
-                    listaPorEspecialidades(request, response);
-                    break;
                 default:
                     lista(request, response);
                     break;
@@ -85,11 +85,11 @@ public class MedicoController extends HttpServlet {
 
     }
 
-    //Requisito R3
+    /*//Requisito R3
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Medico> lista = dao.getAll();
         request.setAttribute("listaMedicos", lista);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/lista.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/lista_medicos.jsp");
         dispatcher.forward(request, response);
     }
     //Requisito R4
@@ -98,6 +98,14 @@ public class MedicoController extends HttpServlet {
         List<Medico> lista = dao.getByEspecialidade(especialidade);
         request.setAttribute("listaMedicos", lista);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/lista_especialidades.jsp");
+        dispatcher.forward(request, response);
+    }*/
+    //Requisito R8
+    private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String crm = request.getParameter("crm");
+        List<Consulta> lista = consultaDao.getByCrm(crm);
+        request.setAttribute("listaConsultasPorMedico", lista);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medico/lista.jsp");
         dispatcher.forward(request, response);
     }
     //Requisito R1
@@ -110,7 +118,7 @@ public class MedicoController extends HttpServlet {
     private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("id"));
-        Medico medico = dao.get(id);
+        Medico medico = medicoDao.get(id);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medico/formulario.jsp");
         request.setAttribute("medico", medico);
         dispatcher.forward(request, response);
@@ -127,7 +135,7 @@ public class MedicoController extends HttpServlet {
 
         Medico medico = new Medico(email, senha, crm, nome, especialidade);
 
-        dao.insert(medico);
+        medicoDao.insert(medico);
         response.sendRedirect("lista");
     }
     //Requisito R1
@@ -143,7 +151,7 @@ public class MedicoController extends HttpServlet {
 
         Medico medico = new Medico(email, senha, crm, nome, especialidade);
 
-        dao.update(medico);
+        medicoDao.update(medico);
         response.sendRedirect("lista");
     }
     //Requisito R1
@@ -151,7 +159,7 @@ public class MedicoController extends HttpServlet {
         Long id = Long.parseLong(request.getParameter("id"));
 
         Medico medico = new Medico(id);
-        dao.delete(medico);
+        medicoDao.delete(medico);
         response.sendRedirect("lista");
     }
 }

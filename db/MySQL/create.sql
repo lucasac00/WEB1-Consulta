@@ -58,7 +58,7 @@ CREATE TABLE Usuario (
     cargo VARCHAR(50) NOT NULL,
     nome_display VARCHAR(100) NOT NULL
 );
--- admin: medico // user: paciente
+-- cargos: admin, paciente, medico
 -- Adicionando Pacientes para o Banco de Dados:
 INSERT INTO Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento) 
 VALUES("pacienteRafael@mail", "senhaDoRafael", "45545678901", "Rafael", "551617348261", "M", "1993-07-13");
