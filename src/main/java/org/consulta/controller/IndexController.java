@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "Index", urlPatterns = { "/index.jsp", "/logout.jsp" })
+@WebServlet(name = "Index", urlPatterns = { "/login.jsp", "/logout.jsp" })
 public class IndexController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -38,10 +38,12 @@ public class IndexController extends HttpServlet {
                         request.getSession().setAttribute("usuarioLogado", usuario);
                         String contextPath = request.getContextPath().replace("/", "");
                         request.getSession().setAttribute("contextPath", contextPath);
-                        if (usuario.getCargo().equals("ADMIN")) {
-                            response.sendRedirect("admin/");
-                        } else {
-                            response.sendRedirect("compras/");
+                        if (usuario.getCargo().equals("admin")) {
+                            response.sendRedirect("usuario/"); //ROTA DE ADMIN, REQUISITOS R1 e R2
+                        } else if (usuario.getCargo().equals("paciente")){
+                            response.sendRedirect("paciente/"); //ROTA DE PACIENTE, REQUISITOS R5 e R6
+                        } else if (usuario.getCargo().equals("medico")){
+                            response.sendRedirect("medico/"); //ROTA DE MEDICO, REQUISITOS R8
                         }
                         return;
                     } else {
@@ -56,7 +58,8 @@ public class IndexController extends HttpServlet {
 
         request.setAttribute("mensagens", erros);
 
-        //TODO: página inicial que mostra todos os médicos, e permite que o usuário faça login ou cadastre
+        //TODO: página inicial que mostra todos os médicos, e permite que o usuário faça login
+        //Não há requisito de CRUD de usuário, apenas admin pode criar médicos e pacientes
         String URL = "/login.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(URL);
         rd.forward(request, response);
