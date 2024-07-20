@@ -9,6 +9,7 @@ import org.consulta.domain.Usuario;
 import org.consulta.util.Erro;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -60,6 +61,9 @@ public class MedicoController extends HttpServlet {
 
         try {
             switch (action) {
+                case "/listagem": // Adicione esta linha para lidar com a listagem de médicos
+                    listagemMedicos(request, response);
+                    break;
                 default:
                     lista(request, response);
                     break;
@@ -67,7 +71,6 @@ public class MedicoController extends HttpServlet {
         } catch (RuntimeException | IOException | ServletException e) {
             throw new ServletException(e);
         }
-
     }
 
     //Requisito R8
@@ -78,4 +81,13 @@ public class MedicoController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medico/lista.jsp");
         dispatcher.forward(request, response);
     }
+
+
+    private void listagemMedicos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Medico> listaMedicos = medicoDao.getAll();
+        request.setAttribute("listaMedicos", listaMedicos);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/nlogado/medicos/listagemMedicos.jsp");
+        dispatcher.forward(request, response);
+    }
+    
 }
