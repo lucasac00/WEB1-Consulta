@@ -14,7 +14,7 @@ import org.consulta.domain.Paciente;
 // Rever o update, pois do jeito que esta nao da para alterar o email
 
 public class PacienteDAO extends GenericDAO {
-
+    //Requisito R2
     public void insert(Paciente paciente) {
 
         String sql = "INSERT INTO Paciente (email, senha, cpf, nome, telefone, sexo, data_nascimento) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -39,7 +39,7 @@ public class PacienteDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
-
+    //Requisito R2
     public List<Paciente> getAll() {
 
         List<Paciente> listaPacientes = new ArrayList<Paciente>();
@@ -52,6 +52,7 @@ public class PacienteDAO extends GenericDAO {
 
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
+                long id = resultSet.getLong("id");
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String cpf = resultSet.getString("cpf");
@@ -60,7 +61,7 @@ public class PacienteDAO extends GenericDAO {
                 String sexo = resultSet.getString("sexo");
                 String data_nascimento = resultSet.getString("data_nascimento");
 
-                Paciente paciente = new Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento);
+                Paciente paciente = new Paciente(id, email, senha, cpf, nome, telefone, sexo, data_nascimento);
                 listaPacientes.add(paciente);
             }
 
@@ -72,39 +73,39 @@ public class PacienteDAO extends GenericDAO {
         }
         return listaPacientes;
     }
-
+    //Requisito R2
     public void delete(Paciente paciente) {
-        String sql = "DELETE FROM Paciente where email = ?";
+        String sql = "DELETE FROM Paciente where id = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setLong(1, paciente.getId());
+            statement.executeUpdate();
+
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //Requisito R2
+    public void update(Paciente paciente) {
+        String sql = "UPDATE Paciente SET email = ?, senha = ?, cpf = ?, nome = ?, telefone = ?, sexo = ?, data_nascimento = ? WHERE id = ?";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, paciente.getEmail());
-            statement.executeUpdate();
-
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void update(Paciente paciente) {
-        String sql = "UPDATE Paciente SET senha = ?, cpf = ?, nome = ?, telefone = ?, sexo = ?, data_nascimento = ?";
-        sql += " WHERE email = ?";
-
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-
-            statement.setString(1, paciente.getSenha());
-            statement.setString(2, paciente.getCpf());
-            statement.setString(3, paciente.getNome());
-            statement.setString(4, paciente.getTelefone());
-            statement.setString(5, paciente.getSexo());
-            statement.setString(6, paciente.getDataNascimento());
-            statement.setString(7, paciente.getEmail());
+            statement.setString(2, paciente.getSenha());
+            statement.setString(3, paciente.getCpf());
+            statement.setString(4, paciente.getNome());
+            statement.setString(5, paciente.getTelefone());
+            statement.setString(6, paciente.getSexo());
+            statement.setString(7, paciente.getDataNascimento());
+            statement.setLong(8, paciente.getId());
             
             statement.executeUpdate();
 
@@ -114,19 +115,20 @@ public class PacienteDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
-
-    public Paciente get(String email) {
+    //Requisito R2
+    public Paciente get(Long id) {
         Paciente paciente = null;
         
-        String sql = "SELECT * from Paciente where email = ?";
+        String sql = "SELECT * from Paciente where id = ?";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
             
-            statement.setString(1, email);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
+                String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String cpf = resultSet.getString("cpf");
                 String nome = resultSet.getString("nome");
@@ -134,7 +136,39 @@ public class PacienteDAO extends GenericDAO {
                 String sexo = resultSet.getString("sexo");
                 String data_nascimento = resultSet.getString("data_nascimento");
 
-                paciente = new Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento);
+                paciente = new Paciente(id, email, senha, cpf, nome, telefone, sexo, data_nascimento);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return paciente;
+    }
+    //Utilizado no requisito R6
+    public Paciente getByCpf(String cpf) {
+        Paciente paciente = null;
+
+        String sql = "SELECT * from Paciente where cpf = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, cpf);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String nome = resultSet.getString("nome");
+                String telefone = resultSet.getString("telefone");
+                String sexo = resultSet.getString("sexo");
+                String data_nascimento = resultSet.getString("data_nascimento");
+
+                paciente = new Paciente(id, email, senha, cpf, nome, telefone, sexo, data_nascimento);
             }
 
             resultSet.close();

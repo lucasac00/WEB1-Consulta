@@ -9,6 +9,8 @@
         Outro problema é que a Consulta não tem primary key, e portanto,
         acredito que para identificar cada consulta teria de fazer a
         concatenação de cpf + crm + datetime. (ou sei la se precisa mesmo)
+
+        DONE
 =====================================================================
 */
 
@@ -20,32 +22,43 @@ CREATE DATABASE Agendamento;
 USE Agendamento;
 
 CREATE TABLE Paciente (
-                          email VARCHAR(50) PRIMARY KEY,
-                          senha VARCHAR(50) NOT NULL,
-                          cpf VARCHAR(11) UNIQUE NOT NULL,
-                          nome VARCHAR(50) NOT NULL,
-                          telefone VARCHAR(15),
-                          sexo CHAR(1),
-                          data_nascimento DATE
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(50),
+    senha VARCHAR(50) NOT NULL,
+    cpf VARCHAR(11) UNIQUE NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    telefone VARCHAR(15),
+    sexo CHAR(1),
+    data_nascimento DATE
 );
 
 CREATE TABLE Medico (
-                        email VARCHAR(50) PRIMARY KEY,
-                        senha VARCHAR(50) NOT NULL,
-                        crm VARCHAR(20) UNIQUE NOT NULL,
-                        nome VARCHAR(50) NOT NULL,
-                        especialidade VARCHAR(50) NOT NULL
+    id BIGINT NOT NULL AUTO_INCREMENT  PRIMARY KEY,
+    email VARCHAR(50),
+    senha VARCHAR(50) NOT NULL,
+    crm VARCHAR(20) UNIQUE NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    especialidade VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Consulta (
-                          id INT AUTO_INCREMENT PRIMARY KEY,
-                          cpf_paciente VARCHAR(11) NOT NULL,
-                          crm_medico VARCHAR(20) NOT NULL,
-                          data_hora DATETIME NOT NULL,
-                          FOREIGN KEY (cpf_paciente) REFERENCES paciente(cpf),
-                          FOREIGN KEY (crm_medico) REFERENCES medico(crm)
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    cpf_paciente VARCHAR(11) NOT NULL,
+    crm_medico VARCHAR(20) NOT NULL,
+    data_hora DATETIME NOT NULL,
+    FOREIGN KEY (cpf_paciente) REFERENCES paciente(cpf),
+    FOREIGN KEY (crm_medico) REFERENCES medico(crm)
 );
 
+
+CREATE TABLE Usuario (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    login VARCHAR(50) NOT NULL,
+    senha VARCHAR(50) NOT NULL,
+    cargo VARCHAR(50) NOT NULL,
+    nome_display VARCHAR(100) NOT NULL
+);
+-- admin: medico // user: paciente
 -- Adicionando Pacientes para o Banco de Dados:
 INSERT INTO Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento) 
 VALUES("pacienteRafael@mail", "senhaDoRafael", "45545678901", "Rafael", "551617348261", "M", "1993-07-13");
@@ -58,6 +71,7 @@ VALUES ("pacienteAna@email.com", "senhaDaAna", "54321678901", "Ana", "5511987662
 
 INSERT INTO Paciente (email, senha, cpf, nome, telefone, sexo, data_nascimento)
 VALUES ("pacienteGabriel@email.com", "senhaDoGabriel", "48829471629", "Gabriel", "551473129401", "M", "2004-10-28");
+
 
 -- Adicionando Medicos para o Banco de Dados:
 INSERT INTO Medico (email, senha, crm, nome, especialidade)
@@ -86,4 +100,12 @@ VALUES ("97772012614", "AM-45082", "2024-07-22 15:30:00");
 # Consulta da Paciente Ana com o Medico Dr. Pedro
 INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)
 VALUES ("54321678901", "PR-54321", "2024-07-23 18:15:00");
+
+
+-- Adicionando Usuarios para o Banco de Dados
+INSERT INTO Usuario (id, login, senha, cargo, nome_display)
+VALUES (1, "lucasac", "123456", "admin", "Lucas Cardoso");
+
+INSERT INTO Usuario (id, login, senha, cargo, nome_display)
+VALUES (1, "johndoe", "123456", "user", "John Doe");
 

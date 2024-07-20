@@ -2,18 +2,42 @@ package org.consulta.domain;
 
 
 public class Medico {
+    private Long id;
     private String email;
     private String senha;
     private String crm;
     private String nome;
     private String especialidade;
 
+    public Medico(Long id) {
+        this.id = id;
+    }
+
     public Medico(String email, String senha, String crm, String nome, String especialidade) {
+        super();
         this.email = email;
         this.senha = senha;
         this.crm = crm;
         this.nome = nome;
         this.especialidade = especialidade;
+    }
+
+    public Medico(Long id, String email, String senha, String crm, String nome, String especialidade) {
+        super();
+        this.id = id;
+        this.email = email;
+        this.senha = senha;
+        this.crm = crm;
+        this.nome = nome;
+        this.especialidade = especialidade;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {

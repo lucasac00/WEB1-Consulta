@@ -6,7 +6,19 @@ public class Consulta {
     private String crmMedico;
     private String dataHora;
 
+    public Consulta(int id) {
+        this.id = id;
+    }
+
+    public Consulta(String cpfPaciente, String crmMedico, String dataHora) {
+        super();
+        this.cpfPaciente = cpfPaciente;
+        this.crmMedico = crmMedico;
+        this.dataHora = dataHora;
+    }
+
     public Consulta(int id, String cpfPaciente, String crmMedico, String dataHora) {
+        super();
         this.id = id;
         this.cpfPaciente = cpfPaciente;
         this.crmMedico = crmMedico;

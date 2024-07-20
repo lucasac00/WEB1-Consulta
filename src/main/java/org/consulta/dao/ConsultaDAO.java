@@ -12,20 +12,19 @@ import java.util.UUID;
 import org.consulta.domain.Consulta;
 
 public class ConsultaDAO extends GenericDAO {
-
+    //CRUD Consulta - Adicionar check se já não existe consulta do mesmo médico e paciente no mesmo horário
     public void insert(Consulta consulta) {
 
-        String sql = "INSERT INTO Consulta (id, cpfPaciente, crmMedico, dataHora) VALUES (?, ?, ?, ?)";
-
+        String sql = "INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora) VALUES (?, ?, ?, ?)";
+        // TODO: Conferir se existe CPF e CRM no banco de dados antes de criar consulta
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement = conn.prepareStatement(sql);
-            statement.setInt(1, consulta.getId());
-            statement.setString(2, consulta.getCpfPaciente());
-            statement.setString(3, consulta.getCrmMedico());
-            statement.setString(4, consulta.getDataHora());
+            statement.setString(1, consulta.getCpfPaciente());
+            statement.setString(2, consulta.getCrmMedico());
+            statement.setString(3, consulta.getDataHora());
             statement.executeUpdate();
 
             statement.close();
@@ -34,7 +33,7 @@ public class ConsultaDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
-
+    //CRUD Consulta
     public List<Consulta> getAll() {
 
         List<Consulta> listaConsultas = new ArrayList<Consulta>();
@@ -64,7 +63,67 @@ public class ConsultaDAO extends GenericDAO {
         }
         return listaConsultas;
     }
+    //Requisito R6 - Todas as consultas de um paciente
+    public List<Consulta> getByCpf(String cpf) {
+        List<Consulta> listaConsultas = new ArrayList<Consulta>();
 
+        String sql = "SELECT * from Consulta WHERE cpf_paciente = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, cpf);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String cpfPaciente = resultSet.getString("cpfPaciente");
+                String crmMedico = resultSet.getString("crmMedico");
+                String dataHora = resultSet.getString("dataHora");
+
+                Consulta consulta = new Consulta(id, cpfPaciente, crmMedico, dataHora);
+                listaConsultas.add(consulta);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaConsultas;
+    }
+    //Requisito R8 - Todas as consultas de um médico
+    public List<Consulta> getByCrm(String crm) {
+        List<Consulta> listaConsultas = new ArrayList<Consulta>();
+
+        String sql = "SELECT * from Consulta WHERE crm_medico = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, crm);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String cpfPaciente = resultSet.getString("cpfPaciente");
+                String crmMedico = resultSet.getString("crmMedico");
+                String dataHora = resultSet.getString("dataHora");
+
+                Consulta consulta = new Consulta(id, cpfPaciente, crmMedico, dataHora);
+                listaConsultas.add(consulta);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaConsultas;
+    }
+    //CRUD Consulta
     public void delete(Consulta consulta) {
         String sql = "DELETE FROM Consulta where id = ?";
 
@@ -72,7 +131,7 @@ public class ConsultaDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
-            statement.setInt(1, consulta.getId());
+            statement.setLong(1, consulta.getId());
             statement.executeUpdate();
 
             statement.close();
@@ -81,10 +140,9 @@ public class ConsultaDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
-
+    //CRUD Consulta
     public void update(Consulta consulta) {
-        String sql = "UPDATE Consulta SET cpfPaciente = ?, crmMedico = ?, dataHora = ?";
-        sql += " WHERE id = ?";
+        String sql = "UPDATE Consulta SET cpf_paciente = ?, crm_medico = ?, data_hora = ? WHERE id = ?";
 
         try {
             Connection conn = this.getConnection();
@@ -93,7 +151,7 @@ public class ConsultaDAO extends GenericDAO {
             statement.setString(1, consulta.getCpfPaciente());
             statement.setString(2, consulta.getCrmMedico());
             statement.setString(3, consulta.getDataHora());
-            statement.setInt(4, consulta.getId());
+            statement.setLong(4, consulta.getId());
             
             statement.executeUpdate();
 
@@ -103,7 +161,7 @@ public class ConsultaDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
-
+    //CRUD Consulta
     public Consulta get(int id) {
         Consulta consulta = null;
         
@@ -113,7 +171,7 @@ public class ConsultaDAO extends GenericDAO {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
             
-            statement.setInt(1, id);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String cpfPaciente = resultSet.getString("cpfPaciente");
@@ -131,4 +189,5 @@ public class ConsultaDAO extends GenericDAO {
         }
         return consulta;
     }
+
 }

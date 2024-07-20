@@ -1,6 +1,7 @@
 package org.consulta.domain;
 
 public class Paciente {
+    private Long id;
     private String email;
     private String senha;
     private String cpf;
@@ -9,7 +10,9 @@ public class Paciente {
     private String sexo;
     private String dataNascimento;
 
+    public Paciente(Long id) {this.id = id;}
     public Paciente(String email, String senha, String cpf, String nome, String telefone, String sexo, String dataNascimento) {
+        super();
         this.email = email;
         this.senha = senha;
         this.cpf = cpf;
@@ -17,6 +20,26 @@ public class Paciente {
         this.telefone = telefone;
         this.sexo = sexo;
         this.dataNascimento = dataNascimento;
+    }
+
+    public Paciente(Long id, String email, String senha, String cpf, String nome, String telefone, String sexo, String dataNascimento) {
+        super();
+        this.id = id;
+        this.email = email;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.sexo = sexo;
+        this.dataNascimento = dataNascimento;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {

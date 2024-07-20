@@ -13,7 +13,7 @@ import org.consulta.domain.Medico;
 // Rever o update, pois do jeito que esta nao da para alterar o email
 
 public class MedicoDAO extends GenericDAO {
-
+    //Requisito R1
     public void insert(Medico medico) {
 
         String sql = "INSERT INTO Medico (email, senha, crm, nome, especialidade) VALUES (?, ?, ?, ?, ?)";
@@ -36,7 +36,7 @@ public class MedicoDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
-
+    //Requisito R3
     public List<Medico> getAll() {
 
         List<Medico> listaMedicos = new ArrayList<Medico>();
@@ -49,13 +49,14 @@ public class MedicoDAO extends GenericDAO {
 
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
+                long id = resultSet.getLong("id");
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String crm = resultSet.getString("crm");
                 String nome = resultSet.getString("nome");
                 String especialidade = resultSet.getString("especialidade");
 
-                Medico medico = new Medico(email, senha, crm, nome, especialidade);
+                Medico medico = new Medico(id, email, senha, crm, nome, especialidade);
                 listaMedicos.add(medico);
             }
 
@@ -67,37 +68,69 @@ public class MedicoDAO extends GenericDAO {
         }
         return listaMedicos;
     }
+    //Requisito R4
+    public List<Medico> getByEspecialidade (String especialidade){
+        List<Medico> listaMedicos = new ArrayList<Medico>();
 
+        String sql = "SELECT * FROM Medico WHERE especialidade = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, especialidade);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                long id = resultSet.getLong("id");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String crm = resultSet.getString("crm");
+                String nome = resultSet.getString("nome");
+
+                Medico medico = new Medico(id, email, senha, crm, nome, especialidade);
+                listaMedicos.add(medico);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaMedicos;
+    }
+    //Requisito R1
     public void delete(Medico medico) {
-        String sql = "DELETE FROM Medico where email = ?";
+        String sql = "DELETE FROM Medico where id = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setLong(1, medico.getId());
+            statement.executeUpdate();
+
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //Requisito R1
+    public void update(Medico medico) {
+        String sql = "UPDATE Medico SET email = ?, senha = ?, crm = ?, nome = ?, especialidade = ? WHERE id = ?";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
 
             statement.setString(1, medico.getEmail());
-            statement.executeUpdate();
-
-            statement.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void update(Medico medico) {
-        String sql = "UPDATE Medico SET senha = ?, crm = ?, nome = ?, especialidade = ?";
-        sql += " WHERE email = ?";
-
-        try {
-            Connection conn = this.getConnection();
-            PreparedStatement statement = conn.prepareStatement(sql);
-
-            statement.setString(1, medico.getSenha());
-            statement.setString(2, medico.getCrm());
-            statement.setString(3, medico.getNome());
-            statement.setString(4, medico.getEspecialidade());
-            statement.setString(5, medico.getEmail());
+            statement.setString(2, medico.getSenha());
+            statement.setString(3, medico.getCrm());
+            statement.setString(4, medico.getNome());
+            statement.setString(5, medico.getEspecialidade());
+            statement.setLong(6, medico.getId());
             
             statement.executeUpdate();
 
@@ -107,25 +140,56 @@ public class MedicoDAO extends GenericDAO {
             throw new RuntimeException(e);
         }
     }
-
-    public Medico get(String email) {
+    //Requisito R1
+    public Medico get(Long id) {
         Medico medico = null;
         
-        String sql = "SELECT * from Medico where email = ?";
+        String sql = "SELECT * from Medico where id = ?";
 
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
             
-            statement.setString(1, email);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
+                String email  =resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String crm = resultSet.getString("crm");
                 String nome = resultSet.getString("nome");
                 String especialidade = resultSet.getString("especialidade");
 
-                medico = new Medico(email, senha, crm, nome, especialidade);
+                medico = new Medico(id, email, senha, crm, nome, especialidade);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return medico;
+    }
+    //Utilizado na criação de consulta
+    public Medico getByCrm(String crm) {
+        Medico medico = null;
+
+        String sql = "SELECT * from Medico where crm = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, crm);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Long id = resultSet.getLong("id");
+                String email  =resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String nome = resultSet.getString("nome");
+                String especialidade = resultSet.getString("especialidade");
+
+                medico = new Medico(id, email, senha, crm, nome, especialidade);
             }
 
             resultSet.close();
