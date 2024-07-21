@@ -39,41 +39,44 @@ public class MedicoController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-        Erro erros = new Erro();
-        System.out.println("\n\n\n\n\n\n\n" + request +  "\n\n\n\n\n\n\n\n\n");
-
-        if (usuario == null){
-            response.sendRedirect(request.getContextPath());
-            return;
-        } else if (!usuario.getCargo().equals("medico") && !usuario.getCargo().equals("admin")) {
-            erros.add("Acesso não autorizado - Cargo incorreto");
-            erros.add("Apenas médicos tem acesso a essa página.");
-            request.setAttribute("mensagens", erros);
-            RequestDispatcher rd = request.getRequestDispatcher("/noAuth.jsp");
-            rd.forward(request, response);
-            return;
-        }
-
         String action = request.getPathInfo();
-        if (action == null){
+        if (action == null) {
             action = "";
         }
 
         try {
             switch (action) {
                 case "/listagemMedicos":
-                    System.out.println("\n\n\n\n\n\n\n\n\nAOUISJHDIAUSHDASUHD\n\n\n\n\n\n\n");
                     listagemMedicos(request, response);
                     break;
                 default:
-                    lista(request, response);
+                    verificarAutorizacao(request, response);
                     break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
             throw new ServletException(e);
         }
     }
+
+    private void verificarAutorizacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+        Erro erros = new Erro();
+
+        if (usuario == null) {
+            response.sendRedirect(request.getContextPath());
+            return;
+        } else if (!usuario.getCargo().equals("medico") && !usuario.getCargo().equals("admin")) {
+            erros.add("Acesso não autorizado - Cargo incorreto");
+            erros.add("Apenas médicos têm acesso a essa página.");
+            request.setAttribute("mensagens", erros);
+            RequestDispatcher rd = request.getRequestDispatcher("/noAuth.jsp");
+            rd.forward(request, response);
+            return;
+        }
+
+        lista(request, response);
+    }
+
 
     //Requisito R8
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
