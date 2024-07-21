@@ -41,11 +41,12 @@ public class MedicoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
         Erro erros = new Erro();
+        System.out.println("\n\n\n\n\n\n\n" + request +  "\n\n\n\n\n\n\n\n\n");
 
         if (usuario == null){
             response.sendRedirect(request.getContextPath());
             return;
-        } else if (!usuario.getCargo().equals("medico")) {
+        } else if (!usuario.getCargo().equals("medico") && !usuario.getCargo().equals("admin")) {
             erros.add("Acesso não autorizado - Cargo incorreto");
             erros.add("Apenas médicos tem acesso a essa página.");
             request.setAttribute("mensagens", erros);
@@ -61,7 +62,8 @@ public class MedicoController extends HttpServlet {
 
         try {
             switch (action) {
-                case "/listagem": // Adicione esta linha para lidar com a listagem de médicos
+                case "/listagemMedicos":
+                    System.out.println("\n\n\n\n\n\n\n\n\nAOUISJHDIAUSHDASUHD\n\n\n\n\n\n\n");
                     listagemMedicos(request, response);
                     break;
                 default:

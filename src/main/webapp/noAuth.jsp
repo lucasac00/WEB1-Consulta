@@ -1,16 +1,21 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: lucfa
-  Date: 20/07/2024
-  Time: 10:49
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Acesso Negado</title>
+    <link href="${pageContext.request.contextPath}/layout.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-
+    <h1>Acesso Negado</h1>
+    <p>Você não tem permissão para acessar esta página.</p>
+    <p><a href="${pageContext.request.contextPath}/login.jsp">Voltar para a página de login</a></p>
+    <c:if test="${not empty mensagens}">
+        <div id="erros">
+            <c:forEach var="mensagem" items="${mensagens}">
+                <p>${mensagem}</p>
+            </c:forEach>
+        </div>
+    </c:if>
 </body>
 </html>

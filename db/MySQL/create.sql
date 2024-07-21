@@ -105,3 +105,5 @@ VALUES ("lucasac", "123456", "admin", "Lucas Cardoso");
 INSERT INTO Usuario (login, senha, cargo, nome_display)
 VALUES ("rafael", "123456", "paciente", "Rafael");
 
+INSERT INTO Usuario (login, senha, cargo, nome_display)
+VALUES ("admin", "admin", "admin", "admin");
