@@ -1,10 +1,8 @@
 package org.consulta.controller;
 
-import com.sun.net.httpserver.Request;
 import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
 import org.consulta.domain.Consulta;
-import org.consulta.domain.Medico;
 import org.consulta.domain.Usuario;
 import org.consulta.util.Erro;
 
