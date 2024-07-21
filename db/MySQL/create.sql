@@ -53,7 +53,7 @@ CREATE TABLE Consulta (
 
 CREATE TABLE Usuario (
     id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    login VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
     senha VARCHAR(50) NOT NULL,
     cargo VARCHAR(50) NOT NULL,
     nome_display VARCHAR(100) NOT NULL
@@ -71,6 +71,9 @@ VALUES ("pacienteAna@email.com", "senhaDaAna", "54321678901", "Ana", "5511987662
 
 INSERT INTO Paciente (email, senha, cpf, nome, telefone, sexo, data_nascimento)
 VALUES ("pacienteGabriel@email.com", "senhaDoGabriel", "48829471629", "Gabriel", "551473129401", "M", "2004-10-28");
+
+INSERT INTO Paciente (email, senha, cpf, nome, telefone, sexo, data_nascimento)
+VALUES ("paciente@email.com", "paciente", "12345678900", "paciente", "000000000000", "B", "0000-00-00");
 
 -- Adicionando Medicos para o Banco de Dados:
 INSERT INTO Medico (email, senha, crm, nome, especialidade)
@@ -99,11 +102,8 @@ INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)
 VALUES ("54321678901", "PR-54321", "2024-07-23 18:15:00");
 
 -- Adicionando Usuarios para o Banco de Dados
-INSERT INTO Usuario (login, senha, cargo, nome_display)
+INSERT INTO Usuario (email, senha, cargo, nome_display)
 VALUES ("lucasac", "123456", "admin", "Lucas Cardoso");
 
-INSERT INTO Usuario (login, senha, cargo, nome_display)
-VALUES ("rafael", "123456", "paciente", "Rafael");
-
-INSERT INTO Usuario (login, senha, cargo, nome_display)
+INSERT INTO Usuario (email, senha, cargo, nome_display)
 VALUES ("admin", "admin", "admin", "admin");

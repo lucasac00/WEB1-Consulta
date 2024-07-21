@@ -23,8 +23,8 @@
 <form method="post" action="${pageContext.request.contextPath}/login">
     <table>
         <tr>
-            <th><fmt:message key="user.login" />:</th>
-            <td><input type="text" name="login" value="${param.login}"/></td>
+            <th><fmt:message key="user.email" />:</th>
+            <td><input type="text" name="email" value="${param.email}"/></td>
         </tr>
         <tr>
             <th><fmt:message key="user.password" />:</th>

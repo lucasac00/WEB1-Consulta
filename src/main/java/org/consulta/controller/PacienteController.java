@@ -4,6 +4,7 @@ import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
 import org.consulta.dao.PacienteDAO;
 import org.consulta.domain.Consulta;
+import org.consulta.domain.Medico;
 import org.consulta.domain.Paciente;
 import org.consulta.domain.Usuario;
 import org.consulta.util.Erro;
@@ -58,7 +59,7 @@ public class PacienteController extends HttpServlet {
 
         try {
             switch (action) {
-                case "/agendamento":
+                case "/agendarConsulta":
                     apresentaFormCadastro(request, response);
                     break;
                 case "/insercao":
@@ -77,15 +78,17 @@ public class PacienteController extends HttpServlet {
         String cpf = request.getParameter("cpf");
         List<Consulta> lista = consultaDao.getByCpf(cpf);
         request.setAttribute("listaConsultasPorPaciente", lista);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/paciente/lista.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/lista.jsp");
         dispatcher.forward(request, response);
     }
 
-    private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/paciente/formulario.jsp");
+    private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Medico> listaMedicos = medicoDao.getAll();  
+        request.setAttribute("listaMedicos", listaMedicos);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/agendarConsulta.jsp");
         dispatcher.forward(request, response);
     }
+
     //Requisito R5
     private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");

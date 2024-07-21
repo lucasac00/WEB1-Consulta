@@ -22,17 +22,17 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
         Erro erros = new Erro();
         if (request.getParameter("bOK") != null) {
-            String login = request.getParameter("login");
+            String email = request.getParameter("email");
             String senha = request.getParameter("senha");
-            if (login == null || login.isEmpty()) {
-                erros.add("Login não informado!");
+            if (email == null || email.isEmpty()) {
+                erros.add("Email não informado!");
             }
             if (senha == null || senha.isEmpty()) {
                 erros.add("Senha não informada!");
             }
             if (!erros.existErros()) {
                 UsuarioDAO dao = new UsuarioDAO();
-                Usuario usuario = dao.getByLogin(login);
+                Usuario usuario = dao.getByEmail(email);
                 if (usuario != null) {
                     if (usuario.getSenha().equalsIgnoreCase(senha)) {
                         request.getSession().setAttribute("usuarioLogado", usuario);

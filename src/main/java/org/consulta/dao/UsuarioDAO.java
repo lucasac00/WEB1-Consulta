@@ -10,13 +10,13 @@ import java.util.List;
 public class UsuarioDAO extends GenericDAO {
 
     public void insert (Usuario usuario){
-        String sql = "INSERT INTO Usuario (login, senha, cargo, nome_display) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO Usuario (email, senha, cargo, nome_display) VALUES (?,?,?,?,?)";
 
         try {
             Connection connection = this.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setString(1, usuario.getLogin());
+            statement.setString(1, usuario.getEmail());
             statement.setString(2, usuario.getSenha());
             statement.setString(3, usuario.getCargo());
             statement.setString(4, usuario.getNome());
@@ -41,12 +41,12 @@ public class UsuarioDAO extends GenericDAO {
 
             while (set.next()) {
                 long id = set.getLong("id");
-                String login = set.getString("login");
+                String email = set.getString("email");
                 String senha = set.getString("senha");
                 String cargo = set.getString("cargo");
                 String nome_display = set.getString("nome_display");
 
-                Usuario usuario = new Usuario(id, login, senha, cargo, nome_display);
+                Usuario usuario = new Usuario(id, email, senha, cargo, nome_display);
                 list.add(usuario);
             }
 
@@ -77,13 +77,13 @@ public class UsuarioDAO extends GenericDAO {
     }
 
     public void update (Usuario usuario) {
-        String sql = "UPDATE Usuario SET login = ?, senha = ?, cargo = ?, nome_display = ? WHERE id = ?";
+        String sql = "UPDATE Usuario SET email = ?, senha = ?, cargo = ?, nome_display = ? WHERE id = ?";
 
         try {
             Connection connection = this.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setString(1, usuario.getLogin());
+            statement.setString(1, usuario.getEmail());
             statement.setString(2, usuario.getSenha());
             statement.setString(3, usuario.getCargo());
             statement.setString(4, usuario.getNome());
@@ -110,12 +110,12 @@ public class UsuarioDAO extends GenericDAO {
             ResultSet set = statement.executeQuery();
 
             if (set.next()) {
-                String login = set.getString("login");
+                String email = set.getString("email");
                 String senha = set.getString("senha");
                 String cargo = set.getString("cargo");
                 String nome = set.getString("nome_display");
 
-                usuario = new Usuario(id, login, senha, cargo, nome);
+                usuario = new Usuario(id, email, senha, cargo, nome);
             }
 
             set.close();
@@ -128,16 +128,16 @@ public class UsuarioDAO extends GenericDAO {
         return usuario;
     }
 
-    public Usuario getByLogin (String login) {
+    public Usuario getByEmail (String email) {
         Usuario usuario = null;
 
-        String sql = "SELECT * FROM Usuario WHERE login = ?";
+        String sql = "SELECT * FROM Usuario WHERE email = ?";
 
         try {
             Connection connection = this.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setString(1, login);
+            statement.setString(1, email);
             ResultSet set = statement.executeQuery();
 
             if (set.next()) {
@@ -146,7 +146,7 @@ public class UsuarioDAO extends GenericDAO {
                 String cargo = set.getString("cargo");
                 String nome = set.getString("nome_display");
 
-                usuario = new Usuario(id, login, senha, cargo, nome);
+                usuario = new Usuario(id, email, senha, cargo, nome);
             }
 
             set.close();
