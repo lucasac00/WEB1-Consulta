@@ -1,44 +1,41 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Lista de Médicos</title>
-    <link rel="stylesheet" href="<c:url value='/css/style.css' />" />
+    <title>Listagem de Médicos</title>
 </head>
 <body>
-    <h1>Lista de Médicos</h1>
-
-    <c:choose>
-        <c:when test="${not empty listaMedicos}">
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>CRM</th>
-                        <th>Nome</th>
-                        <th>Especialidade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="medico" items="${listaMedicos}">
-                        <tr>
-                            <td><c:out value="${medico.email}" /></td>
-                            <td><c:out value="${medico.crm}" /></td>
-                            <td><c:out value="${medico.nome}" /></td>
-                            <td><c:out value="${medico.especialidade}" /></td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </c:when>
-        <c:otherwise>
-            <p>Nenhum médico encontrado.</p>
-        </c:otherwise>
-    </c:choose>
-
-    <a href="<c:url value='/index.jsp' />">Voltar para a página inicial</a>
-
+    <h2>Listagem de Médicos</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>CRM</th>
+            <th>Nome</th>
+            <th>Especialidade</th>
+            <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
+                <th>Ações</th>
+            </c:if>
+        </tr>
+        <c:forEach var="medico" items="${listaMedicos}">
+            <tr>
+                <td>${medico.id}</td>
+                <td>${medico.email}</td>
+                <td>${medico.crm}</td>
+                <td>${medico.nome}</td>
+                <td>${medico.especialidade}</td>
+                <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
+                    <td>
+                        <a href="${pageContext.request.contextPath}/medicos/editarMedicos?id=${medico.id}">Editar</a>
+                        <a href="${pageContext.request.contextPath}/medicos/deletarMedicos?id=${medico.id}" onclick="return confirm('Tem certeza que deseja deletar?')">Deletar</a>
+                    </td>
+                </c:if>
+            </tr>
+        </c:forEach>
+    </table>
+    <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
+        <a href="${pageContext.request.contextPath}/medicos/criarMedicos">Adicionar Novo Médico</a>
+    </c:if>
 </body>
 </html>

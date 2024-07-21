@@ -123,6 +123,26 @@ public class ConsultaDAO extends GenericDAO {
         }
         return listaConsultas;
     }
+
+
+    public void deleteByCrm(String crmMedico) {
+        String sql = "DELETE FROM Consulta WHERE crm_medico = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+
+            statement.setString(1, crmMedico);
+            statement.executeUpdate();
+
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    
     //CRUD Consulta
     public void delete(Consulta consulta) {
         String sql = "DELETE FROM Consulta where id = ?";

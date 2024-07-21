@@ -102,6 +102,12 @@ public class MedicoDAO extends GenericDAO {
     }
     //Requisito R1
     public void delete(Medico medico) {
+
+        String crmMedico = medico.getCrm();
+
+        ConsultaDAO consultaDao = new ConsultaDAO();
+        consultaDao.deleteByCrm(crmMedico);
+        
         String sql = "DELETE FROM Medico where id = ?";
 
         try {
