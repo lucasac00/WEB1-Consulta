@@ -4,6 +4,7 @@ import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
 import org.consulta.domain.Consulta;
 import org.consulta.domain.Usuario;
+import org.consulta.domain.Medico;
 import org.consulta.util.Erro;
 
 import java.io.IOException;

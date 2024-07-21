@@ -17,6 +17,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./target/Consulta.war:/usr/local/tomcat/webapps/Consulta.war
+      - ./target/WEB1-Consulta.war:/usr/local/tomcat/webapps/WEB1-Consulta.war
     depends_on:
       - mysql
