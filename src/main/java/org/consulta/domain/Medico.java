@@ -9,6 +9,10 @@ public class Medico {
     private String nome;
     private String especialidade;
 
+    public Medico() {
+        
+    }
+
     public Medico(Long id) {
         this.id = id;
     }
