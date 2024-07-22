@@ -8,6 +8,7 @@ import org.consulta.domain.Consulta;
 import org.consulta.domain.Medico;
 import org.consulta.domain.Paciente;
 import org.consulta.domain.Usuario;
+import org.consulta.util.EmailUtil;
 import org.consulta.util.Erro;
 
 import javax.servlet.RequestDispatcher;
@@ -59,7 +60,7 @@ public class PacienteController extends HttpServlet {
                     break;
                 case "/deletarPacientes":
                     verificarAutorizacao(request, response, "admin");
-                    deletarPacientes(request, response); 
+                    deletarPacientes(request, response);
                     break;
                 case "/listagemPacientes":
                     verificarAutorizacao(request, response, "admin");
@@ -138,6 +139,24 @@ public class PacienteController extends HttpServlet {
             if (check) {
                 Consulta consulta = new Consulta(cpf, crm, dataHora);
                 consultaDao.insert(consulta);
+
+                // Enviar email para o paciente e médico
+                Paciente paciente = pacienteDao.getByCpf(cpf);
+                Medico medico = medicoDao.getByCrm(crm);
+
+                String pacienteEmail = paciente.getEmail();
+                String medicoEmail = medico.getEmail();
+                String subject = "Nova Consulta Criada";
+                String bodyPaciente = "Olá " + paciente.getNome() + ",\n\nSua consulta foi marcada para " + dataHora + " com o Dr. " + medico.getNome() + ".\n\nAtenciosamente,\nClinica";
+                String bodyMedico = "Olá Dr. " + medico.getNome() + ",\n\nVocê tem uma nova consulta marcada para " + dataHora + " com o paciente " + paciente.getNome() + ".\n\nAtenciosamente,\nClinica";
+
+                try {
+                    EmailUtil.sendEmail(pacienteEmail, subject, bodyPaciente);
+                    EmailUtil.sendEmail(medicoEmail, subject, bodyMedico);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 response.sendRedirect(request.getContextPath() + "/pacientes/listagemConsultas?doc=" + cpf);
             } else {
                 request.setAttribute("errorMessage", "Uma consulta neste horário já existe");
@@ -226,7 +245,7 @@ public class PacienteController extends HttpServlet {
         Long id = Long.parseLong(request.getParameter("id"));
         Paciente paciente = pacienteDao.get(id);
         pacienteDao.delete(paciente);
-    
+
         response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
     }
 
