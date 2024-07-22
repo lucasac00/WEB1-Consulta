@@ -8,6 +8,9 @@
 </head>
 <body>
     <h2><fmt:message key="AddDoctor" /></h2>
+    <c:if test="${not empty errorMessage}">
+        <p style="color: red;">${errorMessage}</p>
+    </c:if>
     <form action="${pageContext.request.contextPath}/medicos/criarMedicos" method="post">
         <label for="email"><fmt:message key="email" /></label>
         <input type="text" name="email" id="email" required><br>

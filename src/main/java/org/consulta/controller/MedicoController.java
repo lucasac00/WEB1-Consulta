@@ -4,6 +4,7 @@ import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
 import org.consulta.dao.UsuarioDAO;
 import org.consulta.domain.Consulta;
+import org.consulta.domain.Paciente;
 import org.consulta.domain.Usuario;
 import org.consulta.domain.Medico;
 import org.consulta.util.Erro;
@@ -154,6 +155,14 @@ public class MedicoController extends HttpServlet {
             String crm = request.getParameter("crm");
             String nome = request.getParameter("nome");
             String especialidade = request.getParameter("especialidade");
+
+            Medico jaExiste = medicoDao.getByCrm(crm);
+            if (jaExiste != null) {
+                request.setAttribute("errorMessage", "Um médico com esse CRM já existe");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medicos/criarMedicos.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
 
             Usuario usuario = new Usuario(email, senha, "medico", nome, crm);
             Medico medico = new Medico(email, senha, crm, nome, especialidade);
