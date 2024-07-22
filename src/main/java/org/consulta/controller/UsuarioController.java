@@ -65,9 +65,6 @@ public class UsuarioController extends HttpServlet{
 
         try {
             switch (action) {
-                case "/cadastro":
-                    apresentaFormCadastro(request, response);
-                    break;
                 case "/insercao_paciente":
                     inserePaciente(request, response);
                     break;
@@ -86,9 +83,6 @@ public class UsuarioController extends HttpServlet{
                 case "/remocao_medico":
                     removeMedico(request, response);
                     break;
-                case "/edicao":
-                    apresentaFormEdicao(request, response);
-                    break;
                 default:
                     lista(request, response);
                     break;
@@ -102,35 +96,6 @@ public class UsuarioController extends HttpServlet{
         List<Usuario> listaUsuarios = usuarioDao.getAll();
         request.setAttribute("listaUsuarios", listaUsuarios);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/usuarios/lista_usuarios.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    public void listaPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Paciente> listaPacientes = pacienteDao.getAll();
-        request.setAttribute("listaPacientes", listaPacientes);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/usuarios/lista_pacientes.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    public void listaMedicos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Medico> listaMedicos = medicoDao.getAll();
-        request.setAttribute("listaMedicos", listaMedicos);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/usuarios/lista_medicos.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/usuarios/formulario.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Long id = Long.parseLong(request.getParameter("id"));
-        Usuario usuario = usuarioDao.get(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/usuarios/formulario.jsp");
-        request.setAttribute("usuario", usuario);
         dispatcher.forward(request, response);
     }
 

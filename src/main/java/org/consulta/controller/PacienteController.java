@@ -168,6 +168,14 @@ public class PacienteController extends HttpServlet {
             String sexo = request.getParameter("sexo");
             String data_nascimento = request.getParameter("data_nascimento");
 
+            Paciente jaExiste = pacienteDao.getByCpf(cpf);
+            if (jaExiste != null) {
+                request.setAttribute("errorMessage", "Um paciente com esse CPF já existe");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/criarPacientes.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
             Usuario usuario = new Usuario(email, senha, "paciente", nome, cpf);
             Paciente paciente = new Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento);
             usuarioDao.insert(usuario);
