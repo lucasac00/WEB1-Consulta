@@ -125,19 +125,19 @@ VALUES ("medicoGuilherme", "senhaDoGuilherme", "medico", "Dr. Guilherme", "MG-48
 -- Adicionando Consultas para o Banco de Dados
 -- Consulta do Paciente Rafael com o Medico Dr. Joao
 INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)
-VALUES ("45545678901", "SP-36730", "2024-07-22 15:30:00");
+VALUES ("45545678901", "SP-36730", "2024-07-22T15:30");
 
 -- Consulta da Paciente Joana com o Medico Dr. Joao
 INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)
-VALUES ("97772012614", "SP-36730", "2024-07-22 21:15:00");
+VALUES ("97772012614", "SP-36730", "2024-07-22T21:00");
 
 -- Consulta da Paciente Joana com a Medica Dra. Maria
 INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)
-VALUES ("97772012614", "AM-45082", "2024-07-22 15:30:00");
+VALUES ("97772012614", "AM-45082", "2024-07-22T15:30");
 
 -- Consulta da Paciente Ana com o Medico Dr. Pedro
 INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)
-VALUES ("54321678901", "PR-54321", "2024-07-23 18:15:00");
+VALUES ("54321678901", "PR-54321", "2024-07-23T18:00");
 
 -- Adicionando Admins para o Banco de Dados
 INSERT INTO Usuario (login, senha, cargo, nome_display, documento)
