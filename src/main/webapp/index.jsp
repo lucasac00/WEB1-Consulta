@@ -21,18 +21,18 @@
 
     <!-- Contêiner para os botões de seleção de idioma -->
     <div class="language-selection">
-        <form action="" method="get">
+        <form action="index.jsp" method="post">
             <input type="hidden" name="lang" value="en">
-            <input type="submit" value="English" onclick="setLanguage('en')">
+            <input type="submit" value="English">
         </form>
-        <form action="" method="get">
+        <form action="index.jsp" method="post">
             <input type="hidden" name="lang" value="pt">
-            <input type="submit" value="Português" onclick="setLanguage('pt')">
+            <input type="submit" value="Português">
         </form>
     </div>
 
     <c:if test="${usuarioLogado == null}">
-        <a href="<c:url value='login' />"><fmt:message key="login" /></a>
+        <a href="<c:url value='login.jsp' />"><fmt:message key="login" /></a>
     </c:if>
 
     <c:if test="${usuarioLogado != null}">
@@ -54,11 +54,5 @@
     <c:if test="${usuarioLogado.cargo == 'medico'}">
         <a href="<c:url value='medicos/listagemConsultas?doc=${usuarioLogado.documento}'/>"><fmt:message key="viewConsultas"></fmt:message></a>
     </c:if>
-
-    <script>
-        function setLanguage(lang) {
-            document.cookie = "lang=" + lang + "; path=/";
-        }
-    </script>
 </body>
 </html>

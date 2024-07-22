@@ -29,13 +29,15 @@ public class LanguageFilterController implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession();
 
-        String lang = null;
-        Cookie[] cookies = httpRequest.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("lang".equals(cookie.getName())) {
-                    lang = cookie.getValue();
-                    break;
+        String lang = httpRequest.getParameter("lang");
+        if (lang == null) {
+            Cookie[] cookies = httpRequest.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("lang".equals(cookie.getName())) {
+                        lang = cookie.getValue();
+                        break;
+                    }
                 }
             }
         }
@@ -43,6 +45,11 @@ public class LanguageFilterController implements Filter {
         if (lang == null) {
             lang = "pt"; // Idioma padrão
         }
+
+        Cookie langCookie = new Cookie("lang", lang);
+        langCookie.setPath("/");
+        langCookie.setMaxAge(60 * 60 * 24 * 365); // 1 year
+        httpResponse.addCookie(langCookie);
 
         Config.set(session, Config.FMT_LOCALE, lang);
         Config.set(session, Config.FMT_LOCALIZATION_CONTEXT, "messages");
