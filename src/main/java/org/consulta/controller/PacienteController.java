@@ -144,7 +144,7 @@ public class PacienteController extends HttpServlet {
             if (check) {
                 Consulta consulta = new Consulta(cpf, crm, dataHora);
                 consultaDao.insert(consulta);
-                response.sendRedirect(request.getContextPath() + "/pacientes/listagemConsultas");
+                response.sendRedirect(request.getContextPath() + "/pacientes/listagemConsultas?doc=" + cpf);
             } else {
                 request.setAttribute("errorMessage", "Uma consulta neste horário já existe");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/criarConsulta.jsp");
