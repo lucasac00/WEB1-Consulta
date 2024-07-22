@@ -147,7 +147,7 @@ public class UsuarioController extends HttpServlet{
         String sexo = request.getParameter("sexo");
         String data = request.getParameter("data_nascimento");
 
-        Usuario usuario = new Usuario(login, senha, cargo, nome);
+        Usuario usuario = new Usuario(login, senha, cargo, nome, cpf);
         Paciente paciente = new Paciente(email, senha, cpf, nome, telefone, sexo, data);
 
         usuarioDao.insert(usuario);
@@ -166,7 +166,7 @@ public class UsuarioController extends HttpServlet{
         String crm = request.getParameter("crm");
         String especialidade = request.getParameter("especialidade");
 
-        Usuario usuario = new Usuario(login, senha, cargo, nome);
+        Usuario usuario = new Usuario(login, senha, cargo, nome, crm);
         Medico medico = new Medico(email, senha, crm, nome, especialidade);
 
         usuarioDao.insert(usuario);
@@ -189,7 +189,7 @@ public class UsuarioController extends HttpServlet{
         String sexo = request.getParameter("sexo");
         String data = request.getParameter("data_nascimento");
 
-        Usuario usuario = new Usuario(id, nome, login, senha, cargo);
+        Usuario usuario = new Usuario(id, nome, login, senha, cargo, cpf);
         Paciente paciente = new Paciente(id, email, senha, cpf, nome, telefone, sexo, data);
         usuarioDao.update(usuario);
         pacienteDao.update(paciente);
@@ -209,7 +209,7 @@ public class UsuarioController extends HttpServlet{
         String crm = request.getParameter("crm");
         String especialidade = request.getParameter("especialidade");
 
-        Usuario usuario = new Usuario(login, senha, cargo, nome);
+        Usuario usuario = new Usuario(login, senha, cargo, nome, crm);
         Medico medico = new Medico(email, senha, crm, nome, especialidade);
 
         usuarioDao.update(usuario);

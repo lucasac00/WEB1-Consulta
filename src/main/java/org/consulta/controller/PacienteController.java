@@ -3,6 +3,7 @@ package org.consulta.controller;
 import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
 import org.consulta.dao.PacienteDAO;
+import org.consulta.dao.UsuarioDAO;
 import org.consulta.domain.Consulta;
 import org.consulta.domain.Medico;
 import org.consulta.domain.Paciente;
@@ -25,11 +26,13 @@ public class PacienteController extends HttpServlet {
     private MedicoDAO medicoDao;
     private ConsultaDAO consultaDao;
     private PacienteDAO pacienteDao;
+    private UsuarioDAO usuarioDao;
     @Override
     public void init(){
         medicoDao = new MedicoDAO();
         consultaDao = new ConsultaDAO();
         pacienteDao = new PacienteDAO();
+        usuarioDao = new UsuarioDAO();
     }
 
     @Override
@@ -61,6 +64,10 @@ public class PacienteController extends HttpServlet {
                 case "/listagemPacientes":
                     verificarAutorizacao(request, response, "admin");
                     listagemPacientes(request, response);
+                    break;
+                case "/listagemConsultas":
+                    //verificarAutorizacao(request, response, "admin");
+                    listagemConsultas(request, response);
                     break;
                 case "/agendamento":
                     apresentaFormCadastro(request, response);
@@ -110,6 +117,16 @@ public class PacienteController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    private void listagemConsultas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String doc = request.getParameter("doc");
+        List<Consulta> listaConsultas = consultaDao.getByCpf(doc);
+        System.out.println(doc);
+        System.out.println(listaConsultas.toString());
+        request.setAttribute("listaConsultas", listaConsultas);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/listagemConsultas.jsp");
+        dispatcher.forward(request, response);
+    }
+
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/formulario.jsp");
@@ -128,7 +145,7 @@ public class PacienteController extends HttpServlet {
         response.sendRedirect("lista");
     }
 
-        private void criarPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void criarPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getMethod().equalsIgnoreCase("POST")) {
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
@@ -138,7 +155,9 @@ public class PacienteController extends HttpServlet {
             String sexo = request.getParameter("sexo");
             String data_nascimento = request.getParameter("data_nascimento");
 
+            Usuario usuario = new Usuario(email, senha, "paciente", nome, cpf);
             Paciente paciente = new Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento);
+            usuarioDao.insert(usuario);
             pacienteDao.insert(paciente);
 
             response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
@@ -159,7 +178,7 @@ public class PacienteController extends HttpServlet {
             String telefone = request.getParameter("telefone");
             String sexo = request.getParameter("sexo");
             String data_nascimento = request.getParameter("data_nascimento");
-    
+
             Paciente paciente = new Paciente(id, email, senha, cpf, nome, telefone, sexo, data_nascimento);
             pacienteDao.update(paciente);
     

@@ -6,24 +6,27 @@ public class Usuario {
     private String senha;
     private String cargo;
     private String nome_display;
+    private String documento;
 
     public Usuario(Long id) {this.id = id;}
 
-    public Usuario(String login, String senha, String cargo, String nome_display) {
+    public Usuario(String login, String senha, String cargo, String nome_display, String documento) {
         super();
         this.login = login;
         this.senha = senha;
         this.cargo = cargo;
         this.nome_display = nome_display;
+        this.documento = documento;
     }
 
-    public Usuario(Long id, String login, String senha, String cargo, String nome_display) {
+    public Usuario(Long id, String login, String senha, String cargo, String nome_display, String documento) {
         super();
         this.id = id;
         this.login = login;
         this.senha = senha;
         this.cargo = cargo;
         this.nome_display = nome_display;
+        this.documento = documento;
     }
 
     public Long getId() {
@@ -64,5 +67,13 @@ public class Usuario {
 
     public void setNome(String nome_display) {
         this.nome_display = nome_display;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
     }
 }

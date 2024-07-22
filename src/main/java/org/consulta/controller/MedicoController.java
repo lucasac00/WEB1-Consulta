@@ -2,6 +2,7 @@ package org.consulta.controller;
 
 import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
+import org.consulta.dao.UsuarioDAO;
 import org.consulta.domain.Consulta;
 import org.consulta.domain.Usuario;
 import org.consulta.domain.Medico;
@@ -24,11 +25,13 @@ public class MedicoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private MedicoDAO medicoDao;
     private ConsultaDAO consultaDao;
+    private UsuarioDAO usuarioDao;
 
     @Override
     public void init(){
         medicoDao = new MedicoDAO();
         consultaDao = new ConsultaDAO();
+        usuarioDao = new UsuarioDAO();
     }
 
     @Override
@@ -136,7 +139,9 @@ public class MedicoController extends HttpServlet {
             String nome = request.getParameter("nome");
             String especialidade = request.getParameter("especialidade");
 
+            Usuario usuario = new Usuario(email, senha, "medico", nome, crm);
             Medico medico = new Medico(email, senha, crm, nome, especialidade);
+            usuarioDao.insert(usuario);
             medicoDao.insert(medico);
 
             response.sendRedirect(request.getContextPath() + "/medicos/listagemMedicos");
@@ -154,9 +159,14 @@ public class MedicoController extends HttpServlet {
             String crm = request.getParameter("crm");
             String nome = request.getParameter("nome");
             String especialidade = request.getParameter("especialidade");
+
+            Usuario usuario = usuarioDao.getByDocumento(crm);
     
             Medico medico = new Medico(id, email, senha, crm, nome, especialidade);
+            usuario = new Usuario(usuario.getId(), email, senha, "medico", nome, crm);
+
             medicoDao.update(medico);
+            usuarioDao.update(usuario);
     
             response.sendRedirect(request.getContextPath() + "/medicos/listagemMedicos");
         } else {
@@ -171,7 +181,9 @@ public class MedicoController extends HttpServlet {
     private void deletarMedicos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("id"));
         Medico medico = medicoDao.get(id);
+        Usuario usuario = usuarioDao.getByDocumento(medico.getCrm());
         medicoDao.delete(medico);
+        usuarioDao.delete(usuario);
     
         response.sendRedirect(request.getContextPath() + "/medicos/listagemMedicos");
     }
