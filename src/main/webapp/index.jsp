@@ -32,10 +32,13 @@
     </div>
 
     <a href="<c:url value='medicos/listagemMedicos' />"><fmt:message key="viewDoctors" /></a>
+    <br></br>
     <a href="<c:url value='login' />"><fmt:message key="login" /></a>
+    <br></br>
     <a href="<c:url value='medicos/listagemEspecialidades' />"><fmt:message key="viewDoctorsBySpecialty" /></a>
-    <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
-        <a href="<c:url value='pacientes/listagemPacientes' />">Ver Pacientes</a>
+    <br></br>
+    <c:if test="${usuarioLogado.cargo == 'admin'}">
+        <a href="<c:url value='pacientes/listagemPacientes' />"><fmt:message key="viewPatients"/></a>
     </c:if>
 
     <script>
