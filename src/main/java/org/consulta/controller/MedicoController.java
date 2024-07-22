@@ -75,8 +75,8 @@ public class MedicoController extends HttpServlet {
                     listarMedicosPorEspecialidade(request, response);
                     break;
                 default:
-                System.out.println("HELLO");
-                    lista(request, response);   
+                    System.out.println("HELLO");
+                    listagemMedicos(request, response);
                     break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
@@ -99,17 +99,6 @@ public class MedicoController extends HttpServlet {
             rd.forward(request, response);
             return;
         }
-    }
-
-
-    // Substitui esse lista pelo listagemConsultas pra ficar igual ao do lucas
-    //Requisito R8
-    private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String crm = request.getParameter("crm");
-        List<Consulta> lista = consultaDao.getByCrm(crm);
-        request.setAttribute("listaConsultasPorMedico", lista);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medicos/lista.jsp");
-        dispatcher.forward(request, response);
     }
 
     // R3 
