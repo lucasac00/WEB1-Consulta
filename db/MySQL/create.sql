@@ -77,13 +77,19 @@ INSERT INTO Medico (email, senha, crm, nome, especialidade)
 VALUES ("medicoJoao@email.com", "senhaDoJoao", "SP-36730", "Dr. João", "Cardiologia");
 
 INSERT INTO Medico (email, senha, crm, nome, especialidade)
+VALUES ("medicoDaniel@email.com", "senhaDoDaniel", "SC-86399", "Dr. Daniel", "Cardiologia");
+
+INSERT INTO Medico (email, senha, crm, nome, especialidade)
 VALUES ("medicaMaria@email.com", "senhaDaMaria", "AM-45082", "Dra. Maria", "Pediatria");
 
 INSERT INTO Medico (email, senha, crm, nome, especialidade)
 VALUES ("medicoPedro@email.com", "senhaDoPedro", "PR-54321", "Dr. Pedro", "Ortopedia");
 
 INSERT INTO Medico (email, senha, crm, nome, especialidade)
-VALUES ("medicoLarissa@email.com", "senhaDaLarissa", "RJ-18093", "Dra. Larissa", "Neurologia");
+VALUES ("medicaLarissa@email.com", "senhaDaLarissa", "RJ-18093", "Dra. Larissa", "Neurologia");
+
+INSERT INTO Medico (email, senha, crm, nome, especialidade)
+VALUES ("medicoGuilherme@email.com", "senhaDoGuilherme", "MG-48773", "Dr. Guilherme", "Neurologia");
 
 -- Adicionando Consultas para o Banco de Dados
 -- # Consulta do Paciente Rafael com o Medico Dr. Joao 
