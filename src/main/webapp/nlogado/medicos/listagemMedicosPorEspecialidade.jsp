@@ -1,21 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Listagem de Médicos por Especialidade</title>
+    <title><fmt:message key="doctorExpertiseList" /></title>
 </head>
 <body>
-    <h2>Médicos Especializados em ${especialidade}</h2>
+    <h2><fmt:message key="doctorsExpertise"/>${especialidade}</h2>
     <table border="1">
         <tr>
-            <th>ID</th>
-            <th>Email</th>
-            <th>CRM</th>
-            <th>Nome</th>
-            <th>Especialidade</th>
+            <th><fmt:message key="id" /></th>
+            <th><fmt:message key="email" /></th>
+            <th><fmt:message key="crm" /></th>
+            <th><fmt:message key="name" /></th>
+            <th><fmt:message key="expertise" /></th>
             <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
-                <th>Ações</th>
+                <th><fmt:message key="actions" /></th>
             </c:if>
         </tr>
         <c:forEach var="medico" items="${listaMedicos}">
@@ -27,16 +28,16 @@
                 <td>${medico.especialidade}</td>
                 <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
                     <td>
-                        <a href="${pageContext.request.contextPath}/medicos/editarMedicos?id=${medico.id}">Editar</a>
-                        <a href="${pageContext.request.contextPath}/medicos/deletarMedicos?id=${medico.id}" onclick="return confirm('Tem certeza que deseja deletar?')">Deletar</a>
+                        <a href="${pageContext.request.contextPath}/medicos/editarMedicos?id=${medico.id}"><fmt:message key="edit" /></a>
+                        <a href="${pageContext.request.contextPath}/medicos/deletarMedicos?id=${medico.id}" onclick="return confirm(<fmt:message key='confirmAction' />)"><fmt:message key='delete' /></a>
                     </td>
                 </c:if>
             </tr>
         </c:forEach>
     </table>
     <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
-        <a href="${pageContext.request.contextPath}/medicos/criarMedicos">Adicionar Novo Médico</a>
+        <a href="${pageContext.request.contextPath}/medicos/criarMedicos"><fmt:message key="addDoctor" /></a>
     </c:if>
-    <a href="${pageContext.request.contextPath}/index.jsp">Home</a>
+    <a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="home" /></a>
 </body>
 </html>

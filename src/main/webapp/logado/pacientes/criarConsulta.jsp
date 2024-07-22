@@ -1,9 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Adicionar Consulta</title>
+    <title><fmt:message key="createAppointmentTitle" /></title>
   </head>
   <script>
     window.onload = function() {
@@ -19,18 +20,18 @@
   </script>
 
   <body>
-    <h2>Adicionar Paciente</h2>
+    <h2><fmt:message key="addPatient" /></h2>
     <c:if test="${not empty errorMessage}">
       <p style="color: red;">${errorMessage}</p>
     </c:if>
     <form action="${pageContext.request.contextPath}/pacientes/criarConsulta" method="post">
-      <label for="cpf">CPF do Paciente:</label>
+      <label for="cpf"><fmt:message key="cpfPatient" /></label>
       <input type="text" name="cpf" id="cpf" value="${usuarioLogado.documento}" readonly><br>
 
-      <label for="crm">CRM do Médico:</label>
+      <label for="crm"><fmt:message key="crmDoctor" /></label>
       <input type="text" name="crm" id="crm" required><br>
 
-      <label for="data_hora">Data e Hora:</label>
+      <label for="data_hora"><fmt:message key="createAppointmentDateAndTime" /></label>
       <input type="datetime-local" name="data_hora" id="data_hora" required step="1800"><br>
 
       <input type="submit" value="Adicionar">
