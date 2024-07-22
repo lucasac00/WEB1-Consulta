@@ -28,13 +28,13 @@
     <h2><fmt:message key="doctorsList" /></h2>
     <table border="1">
         <tr>
-            <th>ID</th>
-            <th>Email</th>
-            <th>CRM</th>
-            <th>Nome</th>
-            <th>Especialidade</th>
+            <th><fmt:message key="lid" /></th>
+            <th><fmt:message key="lemail" /></th>
+            <th><fmt:message key="lcrm" /></th>
+            <th><fmt:message key="lname" /></th>
+            <th><fmt:message key="lexpertise" /></th>
             <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
-                <th>Ações</th>
+                <th><fmt:message key="lactions" /></th>
             </c:if>
         </tr>
         <c:forEach var="medico" items="${listaMedicos}">
@@ -46,7 +46,7 @@
                 <td>${medico.especialidade}</td>
                 <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
                     <td>
-                        <a href="${pageContext.request.contextPath}/medicos/editarMedicos?id=${medico.id}"><fmt:message key="editDoctors" /></a>
+                        <a href="${pageContext.request.contextPath}/medicos/editarMedicos?id=${medico.id}"><fmt:message key="editDoctor" /></a>
                         <a href="${pageContext.request.contextPath}/medicos/deletarMedicos?id=${medico.id}" onclick="return confirm(<fmt:message key='confirmAction' />)"><fmt:message key="delete" /></a>
                     </td>
                 </c:if>
