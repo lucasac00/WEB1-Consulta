@@ -4,6 +4,7 @@ import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
 import org.consulta.dao.PacienteDAO;
 import org.consulta.domain.Consulta;
+import org.consulta.domain.Medico;
 import org.consulta.domain.Paciente;
 import org.consulta.domain.Usuario;
 import org.consulta.util.Erro;
@@ -23,10 +24,12 @@ public class PacienteController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private MedicoDAO medicoDao;
     private ConsultaDAO consultaDao;
+    private PacienteDAO pacienteDao;
     @Override
     public void init(){
         medicoDao = new MedicoDAO();
         consultaDao = new ConsultaDAO();
+        pacienteDao = new PacienteDAO();
     }
 
     @Override
@@ -36,21 +39,6 @@ public class PacienteController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-        Erro erros = new Erro();
-
-        if (usuario == null){
-            response.sendRedirect(request.getContextPath());
-            return;
-        } else if (!usuario.getCargo().equals("paciente")) {
-            erros.add("Acesso não autorizado - Cargo incorreto");
-            erros.add("Apenas pacientes tem acesso a essa página.");
-            request.setAttribute("mensagens", erros);
-            RequestDispatcher rd = request.getRequestDispatcher("/noAuth.jsp");
-            rd.forward(request, response);
-            return;
-        }
-
         String action = request.getPathInfo();
         if (action == null){
             action = "";
@@ -58,6 +46,22 @@ public class PacienteController extends HttpServlet {
 
         try {
             switch (action) {
+                case "/criarPacientes":
+                    verificarAutorizacao(request, response, "admin");
+                    criarPacientes(request, response);
+                    break;
+                case "/editarPacientes":
+                    verificarAutorizacao(request, response, "admin");
+                    editarPacientes(request, response);
+                    break;
+                case "/deletarPacientes":
+                    verificarAutorizacao(request, response, "admin");
+                    deletarPacientes(request, response); 
+                    break;
+                case "/listagemPacientes":
+                    verificarAutorizacao(request, response, "admin");
+                    listagemPacientes(request, response);
+                    break;
                 case "/agendamento":
                     apresentaFormCadastro(request, response);
                     break;
@@ -73,17 +77,42 @@ public class PacienteController extends HttpServlet {
         }
     }
 
+    private void verificarAutorizacao(HttpServletRequest request, HttpServletResponse response, String cargo) throws ServletException, IOException {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+        Erro erros = new Erro();
+
+        if (usuario == null) {
+            response.sendRedirect(request.getContextPath());
+            return;
+        } else if (!usuario.getCargo().equals(cargo) && !usuario.getCargo().equals("admin")) {
+            erros.add("Acesso não autorizado - Cargo incorreto");
+            erros.add("Apenas admins têm acesso a essa página.");
+            request.setAttribute("mensagens", erros);
+            System.out.println(erros);
+            RequestDispatcher rd = request.getRequestDispatcher("/noAuth.jsp");
+            rd.forward(request, response);
+            return;
+        }
+    }
+
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cpf = request.getParameter("cpf");
         List<Consulta> lista = consultaDao.getByCpf(cpf);
         request.setAttribute("listaConsultasPorPaciente", lista);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/paciente/lista.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/lista.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void listagemPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Paciente> listaPacientes = pacienteDao.getAll();
+        request.setAttribute("listaPacientes", listaPacientes);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/listagemPacientes.jsp");
         dispatcher.forward(request, response);
     }
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/paciente/formulario.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/formulario.jsp");
         dispatcher.forward(request, response);
     }
     //Requisito R5
@@ -98,4 +127,58 @@ public class PacienteController extends HttpServlet {
         consultaDao.insert(consulta);
         response.sendRedirect("lista");
     }
+
+        private void criarPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getMethod().equalsIgnoreCase("POST")) {
+            String email = request.getParameter("email");
+            String senha = request.getParameter("senha");
+            String cpf = request.getParameter("cpf");
+            String nome = request.getParameter("nome");
+            String telefone = request.getParameter("telefone");
+            String sexo = request.getParameter("sexo");
+            String data_nascimento = request.getParameter("data_nascimento");
+
+            Paciente paciente = new Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento);
+            pacienteDao.insert(paciente);
+
+            response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/criarPacientes.jsp");
+            dispatcher.forward(request, response);
+        }
+    }
+
+    // R2
+    private void editarPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getMethod().equalsIgnoreCase("POST")) {
+            Long id = Long.parseLong(request.getParameter("id"));
+            String email = request.getParameter("email");
+            String senha = request.getParameter("senha");
+            String cpf = request.getParameter("cpf");
+            String nome = request.getParameter("nome");
+            String telefone = request.getParameter("telefone");
+            String sexo = request.getParameter("sexo");
+            String data_nascimento = request.getParameter("data_nascimento");
+    
+            Paciente paciente = new Paciente(id, email, senha, cpf, nome, telefone, sexo, data_nascimento);
+            pacienteDao.update(paciente);
+    
+            response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
+        } else {
+            Long id = Long.parseLong(request.getParameter("id"));
+            Paciente paciente = pacienteDao.get(id);
+            request.setAttribute("paciente", paciente);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/editarPacientes.jsp");
+            dispatcher.forward(request, response);
+        }
+    }
+
+    private void deletarPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Long id = Long.parseLong(request.getParameter("id"));
+        Paciente paciente = pacienteDao.get(id);
+        pacienteDao.delete(paciente);
+    
+        response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
+    }
+
 }

@@ -37,5 +37,6 @@
         </tr>
     </table>
 </form>
+<a href="${pageContext.request.contextPath}/index.jsp">Home</a>
 </body>
 </html>

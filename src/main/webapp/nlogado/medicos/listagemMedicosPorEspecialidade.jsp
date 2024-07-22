@@ -37,5 +37,6 @@
     <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
         <a href="${pageContext.request.contextPath}/medicos/criarMedicos">Adicionar Novo Médico</a>
     </c:if>
+    <a href="${pageContext.request.contextPath}/index.jsp">Home</a>
 </body>
 </html>
