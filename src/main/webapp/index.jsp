@@ -43,6 +43,9 @@
     <c:if test="${usuarioLogado.cargo == 'paciente'}">
         <a href="<c:url value='pacientes/listagemConsultas?doc=${usuarioLogado.documento}'/>"><fmt:message key="viewConsultas"></fmt:message></a>
     </c:if>
+    <c:if test="${usuarioLogado.cargo == 'medico'}">
+        <a href="<c:url value='medicos/listagemConsultas?doc=${usuarioLogado.documento}'/>"><fmt:message key="viewConsultas"></fmt:message></a>
+    </c:if>
 
     <script>
         function setLanguage(lang) {

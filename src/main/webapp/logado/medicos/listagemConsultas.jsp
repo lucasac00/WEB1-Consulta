@@ -23,7 +23,6 @@
         </tr>
     </c:forEach>
 </table>
-<a href="${pageContext.request.contextPath}/pacientes/criarConsulta">Adicionar Nova Consulta</a>
 <a href="${pageContext.request.contextPath}/index.jsp">Home</a>
 </body>
 </html>

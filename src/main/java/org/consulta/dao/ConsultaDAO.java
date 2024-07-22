@@ -47,9 +47,9 @@ public class ConsultaDAO extends GenericDAO {
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String cpfPaciente = resultSet.getString("cpfPaciente");
-                String crmMedico = resultSet.getString("crmMedico");
-                String dataHora = resultSet.getString("dataHora");
+                String cpfPaciente = resultSet.getString("cpf_paciente");
+                String crmMedico = resultSet.getString("crm_medico");
+                String dataHora = resultSet.getString("data_hora");
 
                 Consulta consulta = new Consulta(id, cpfPaciente, crmMedico, dataHora);
                 listaConsultas.add(consulta);
@@ -107,9 +107,9 @@ public class ConsultaDAO extends GenericDAO {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String cpfPaciente = resultSet.getString("cpfPaciente");
-                String crmMedico = resultSet.getString("crmMedico");
-                String dataHora = resultSet.getString("dataHora");
+                String cpfPaciente = resultSet.getString("cpf_paciente");
+                String crmMedico = resultSet.getString("crm_medico");
+                String dataHora = resultSet.getString("data_hora");
 
                 Consulta consulta = new Consulta(id, cpfPaciente, crmMedico, dataHora);
                 listaConsultas.add(consulta);
