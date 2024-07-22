@@ -34,6 +34,10 @@
     <c:if test="${usuarioLogado == null}">
         <a href="<c:url value='login.jsp' />"><fmt:message key="login" /></a>
     </c:if>
+
+    <c:if test="${usuarioLogado != null}">
+        <a href="<c:url value='logout' />"><fmt:message key="logout" /></a>
+    </c:if>
     <br></br>
     <a href="<c:url value='medicos/listagemMedicos' />"><fmt:message key="viewDoctors" /></a>
     <a href="<c:url value='medicos/listagemEspecialidades' />"><fmt:message key="viewDoctorsBySpecialty" /></a>
@@ -45,7 +49,7 @@
         <a href="<c:url value='pacientes/listagemConsultas?doc=${usuarioLogado.documento}'/>"><fmt:message key="viewConsultas"></fmt:message></a>
     </c:if>
     <c:if test="${usuarioLogado.cargo == 'paciente'}">
-        <a href="<c:url value='pacientes/criarConsulta?doc=${usuarioLogado.documento}'/>">Adicionar Nova Consulta</a>
+        <a href="<c:url value='pacientes/criarConsulta?doc=${usuarioLogado.documento}'/>"><fmt:message key="addConsultas"></fmt:message></a>
     </c:if>
     <c:if test="${usuarioLogado.cargo == 'medico'}">
         <a href="<c:url value='medicos/listagemConsultas?doc=${usuarioLogado.documento}'/>"><fmt:message key="viewConsultas"></fmt:message></a>

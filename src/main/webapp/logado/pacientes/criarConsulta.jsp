@@ -17,8 +17,12 @@
       document.getElementById("data_hora").min = minDateTime;
     }
   </script>
+
   <body>
     <h2>Adicionar Paciente</h2>
+    <c:if test="${not empty errorMessage}">
+      <p style="color: red;">${errorMessage}</p>
+    </c:if>
     <form action="${pageContext.request.contextPath}/pacientes/criarConsulta" method="post">
       <label for="cpf">CPF do Paciente:</label>
       <input type="text" name="cpf" id="cpf" value="${usuarioLogado.documento}" readonly><br>
