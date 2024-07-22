@@ -8,6 +8,7 @@ import org.consulta.domain.Consulta;
 import org.consulta.domain.Medico;
 import org.consulta.domain.Paciente;
 import org.consulta.domain.Usuario;
+import org.consulta.util.EmailUtil;
 import org.consulta.util.Erro;
 
 import javax.servlet.RequestDispatcher;
@@ -59,22 +60,22 @@ public class PacienteController extends HttpServlet {
                     break;
                 case "/deletarPacientes":
                     verificarAutorizacao(request, response, "admin");
-                    deletarPacientes(request, response); 
+                    deletarPacientes(request, response);
                     break;
                 case "/listagemPacientes":
                     verificarAutorizacao(request, response, "admin");
                     listagemPacientes(request, response);
                     break;
                 case "/listagemConsultas":
-                    //verificarAutorizacao(request, response, "paciente");
+                    verificarAutorizacao(request, response, "paciente");
                     listagemConsultas(request, response);
                     break;
                 case "/criarConsulta":
-                    //verificarAutorizacao(request, response, "paciente");
+                    verificarAutorizacao(request, response, "paciente");
                     criarConsulta(request, response);
                     break;
                 default:
-                    lista(request, response);
+                    redirect(request, response);
                     break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
@@ -100,11 +101,8 @@ public class PacienteController extends HttpServlet {
         }
     }
 
-    private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String cpf = request.getParameter("cpf");
-        List<Consulta> lista = consultaDao.getByCpf(cpf);
-        request.setAttribute("listaConsultasPorPaciente", lista);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/lista.jsp");
+    private void redirect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -125,11 +123,6 @@ public class PacienteController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/formulario.jsp");
-        dispatcher.forward(request, response);
-    }
     //Requisito R5
     private void criarConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Medico> listaMedicos = medicoDao.getAll();
@@ -146,6 +139,24 @@ public class PacienteController extends HttpServlet {
             if (check) {
                 Consulta consulta = new Consulta(cpf, crm, dataHora);
                 consultaDao.insert(consulta);
+
+                // Enviar email para o paciente e médico
+                Paciente paciente = pacienteDao.getByCpf(cpf);
+                Medico medico = medicoDao.getByCrm(crm);
+
+                String pacienteEmail = paciente.getEmail();
+                String medicoEmail = medico.getEmail();
+                String subject = "Nova Consulta Criada";
+                String bodyPaciente = "Olá " + paciente.getNome() + ",\n\nSua consulta foi marcada para " + dataHora + " com o Dr. " + medico.getNome() + ".\n\nAtenciosamente,\nClinica";
+                String bodyMedico = "Olá Dr. " + medico.getNome() + ",\n\nVocê tem uma nova consulta marcada para " + dataHora + " com o paciente " + paciente.getNome() + ".\n\nAtenciosamente,\nClinica";
+
+                try {
+                    EmailUtil.sendEmail(pacienteEmail, subject, bodyPaciente);
+                    EmailUtil.sendEmail(medicoEmail, subject, bodyMedico);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 response.sendRedirect(request.getContextPath() + "/pacientes/listagemConsultas?doc=" + cpf);
             } else {
                 request.setAttribute("errorMessage", "Uma consulta neste horário já existe");
@@ -168,6 +179,14 @@ public class PacienteController extends HttpServlet {
             String sexo = request.getParameter("sexo");
             String data_nascimento = request.getParameter("data_nascimento");
 
+            Paciente jaExiste = pacienteDao.getByCpf(cpf);
+            if (jaExiste != null) {
+                request.setAttribute("errorMessage", "Um paciente com esse CPF já existe");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/criarPacientes.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
             Usuario usuario = new Usuario(email, senha, "paciente", nome, cpf);
             Paciente paciente = new Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento);
             usuarioDao.insert(usuario);
@@ -184,6 +203,7 @@ public class PacienteController extends HttpServlet {
     private void editarPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getMethod().equalsIgnoreCase("POST")) {
             Long id = Long.parseLong(request.getParameter("id"));
+            String ogcpf = request.getParameter("ogcpf");
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
             String cpf = request.getParameter("cpf");
@@ -192,14 +212,30 @@ public class PacienteController extends HttpServlet {
             String sexo = request.getParameter("sexo");
             String data_nascimento = request.getParameter("data_nascimento");
 
-            Paciente paciente = new Paciente(id, email, senha, cpf, nome, telefone, sexo, data_nascimento);
-            pacienteDao.update(paciente);
-    
-            response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
+            Usuario usuario = usuarioDao.getByDocumento(ogcpf);
+
+            if (usuario != null){
+                Paciente paciente = new Paciente(id, email, senha, cpf, nome, telefone, sexo, data_nascimento);
+                usuario = new Usuario(usuario.getId(), email, senha, "paciente", nome, cpf);
+
+                pacienteDao.update(paciente);
+                usuarioDao.update(usuario);
+
+                response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
+            } else {
+                request.setAttribute("errorMessage", "Usuário com o CPF dado não existe");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medicos/editarPacientes.jsp");
+                dispatcher.forward(request, response);
+            }
+
         } else {
             Long id = Long.parseLong(request.getParameter("id"));
+            String ogcpf = request.getParameter("ogcpf");
+
             Paciente paciente = pacienteDao.get(id);
             request.setAttribute("paciente", paciente);
+            request.setAttribute("ogcpf", ogcpf);
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/editarPacientes.jsp");
             dispatcher.forward(request, response);
         }
@@ -209,7 +245,7 @@ public class PacienteController extends HttpServlet {
         Long id = Long.parseLong(request.getParameter("id"));
         Paciente paciente = pacienteDao.get(id);
         pacienteDao.delete(paciente);
-    
+
         response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
     }
 

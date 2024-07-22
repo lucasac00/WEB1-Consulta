@@ -4,6 +4,7 @@ import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
 import org.consulta.dao.UsuarioDAO;
 import org.consulta.domain.Consulta;
+import org.consulta.domain.Paciente;
 import org.consulta.domain.Usuario;
 import org.consulta.domain.Medico;
 import org.consulta.util.Erro;
@@ -74,8 +75,8 @@ public class MedicoController extends HttpServlet {
                     listarMedicosPorEspecialidade(request, response);
                     break;
                 default:
-                System.out.println("HELLO");
-                    lista(request, response);   
+                    System.out.println("HELLO");
+                    listagemMedicos(request, response);
                     break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
@@ -98,17 +99,6 @@ public class MedicoController extends HttpServlet {
             rd.forward(request, response);
             return;
         }
-    }
-
-
-    // Substitui esse lista pelo listagemConsultas pra ficar igual ao do lucas
-    //Requisito R8
-    private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String crm = request.getParameter("crm");
-        List<Consulta> lista = consultaDao.getByCrm(crm);
-        request.setAttribute("listaConsultasPorMedico", lista);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medicos/lista.jsp");
-        dispatcher.forward(request, response);
     }
 
     // R3 
@@ -155,6 +145,14 @@ public class MedicoController extends HttpServlet {
             String nome = request.getParameter("nome");
             String especialidade = request.getParameter("especialidade");
 
+            Medico jaExiste = medicoDao.getByCrm(crm);
+            if (jaExiste != null) {
+                request.setAttribute("errorMessage", "Um médico com esse CRM já existe");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medicos/criarMedicos.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
             Usuario usuario = new Usuario(email, senha, "medico", nome, crm);
             Medico medico = new Medico(email, senha, crm, nome, especialidade);
             usuarioDao.insert(usuario);
@@ -170,25 +168,36 @@ public class MedicoController extends HttpServlet {
     private void editarMedicos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getMethod().equalsIgnoreCase("POST")) {
             Long id = Long.parseLong(request.getParameter("id"));
+            String og_crm = request.getParameter("ogcrm");
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
             String crm = request.getParameter("crm");
             String nome = request.getParameter("nome");
             String especialidade = request.getParameter("especialidade");
 
-            Usuario usuario = usuarioDao.getByDocumento(crm);
-    
-            Medico medico = new Medico(id, email, senha, crm, nome, especialidade);
-            usuario = new Usuario(usuario.getId(), email, senha, "medico", nome, crm);
+            Usuario usuario = usuarioDao.getByDocumento(og_crm);
+          
+            if (usuario != null) {
+                Medico medico = new Medico(id, email, senha, crm, nome, especialidade);
+                usuario = new Usuario(usuario.getId(), email, senha, "medico", nome, crm);
 
-            medicoDao.update(medico);
-            usuarioDao.update(usuario);
-    
-            response.sendRedirect(request.getContextPath() + "/medicos/listagemMedicos");
+                medicoDao.update(medico);
+                usuarioDao.update(usuario);
+
+                response.sendRedirect(request.getContextPath() + "/medicos/listagemMedicos");
+            } else {
+                request.setAttribute("errorMessage", "Usuário com o CRM dado não foi encontrado");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medicos/editarMedicos.jsp");
+                dispatcher.forward(request, response);
+            }
         } else {
             Long id = Long.parseLong(request.getParameter("id"));
+            String og_crm = request.getParameter("ogcrm");
+
             Medico medico = medicoDao.get(id);
             request.setAttribute("medico", medico);
+            request.setAttribute("ogcrm", og_crm);
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medicos/editarMedicos.jsp");
             dispatcher.forward(request, response);
         }
