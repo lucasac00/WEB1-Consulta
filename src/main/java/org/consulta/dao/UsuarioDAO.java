@@ -10,7 +10,7 @@ import java.util.List;
 public class UsuarioDAO extends GenericDAO {
 
     public void insert (Usuario usuario){
-        String sql = "INSERT INTO Usuario (login, senha, cargo, nome_display) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO Usuario (login, senha, cargo, nome_display, documento) VALUES (?,?,?,?,?)";
 
         try {
             Connection connection = this.getConnection();
@@ -20,6 +20,7 @@ public class UsuarioDAO extends GenericDAO {
             statement.setString(2, usuario.getSenha());
             statement.setString(3, usuario.getCargo());
             statement.setString(4, usuario.getNome());
+            statement.setString(5, usuario.getDocumento());
             statement.executeUpdate();
             statement.close();
             connection.close();
@@ -45,8 +46,9 @@ public class UsuarioDAO extends GenericDAO {
                 String senha = set.getString("senha");
                 String cargo = set.getString("cargo");
                 String nome_display = set.getString("nome_display");
+                String documento = set.getString("documento");
 
-                Usuario usuario = new Usuario(id, login, senha, cargo, nome_display);
+                Usuario usuario = new Usuario(id, login, senha, cargo, nome_display, documento);
                 list.add(usuario);
             }
 
@@ -77,7 +79,7 @@ public class UsuarioDAO extends GenericDAO {
     }
 
     public void update (Usuario usuario) {
-        String sql = "UPDATE Usuario SET login = ?, senha = ?, cargo = ?, nome_display = ? WHERE id = ?";
+        String sql = "UPDATE Usuario SET login = ?, senha = ?, cargo = ?, nome_display = ?, document = ? WHERE id = ?";
 
         try {
             Connection connection = this.getConnection();
@@ -87,7 +89,8 @@ public class UsuarioDAO extends GenericDAO {
             statement.setString(2, usuario.getSenha());
             statement.setString(3, usuario.getCargo());
             statement.setString(4, usuario.getNome());
-            statement.setLong(5, usuario.getId());
+            statement.setString(5, usuario.getDocumento());
+            statement.setLong(6, usuario.getId());
 
             statement.executeUpdate();
             statement.close();
@@ -114,8 +117,9 @@ public class UsuarioDAO extends GenericDAO {
                 String senha = set.getString("senha");
                 String cargo = set.getString("cargo");
                 String nome = set.getString("nome_display");
+                String documento = set.getString("documento");
 
-                usuario = new Usuario(id, login, senha, cargo, nome);
+                usuario = new Usuario(id, login, senha, cargo, nome, documento);
             }
 
             set.close();
@@ -145,8 +149,40 @@ public class UsuarioDAO extends GenericDAO {
                 String senha = set.getString("senha");
                 String cargo = set.getString("cargo");
                 String nome = set.getString("nome_display");
+                String documento = set.getString("documento");
 
-                usuario = new Usuario(id, login, senha, cargo, nome);
+                usuario = new Usuario(id, login, senha, cargo, nome, documento);
+            }
+
+            set.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return usuario;
+    }
+    public Usuario getByDocumento(String documento){
+        Usuario usuario = null;
+
+        String sql = "SELECT * FROM Usuario WHERE documento = ?";
+
+        try {
+            Connection connection = this.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, documento);
+            ResultSet set = statement.executeQuery();
+
+            if (set.next()) {
+                Long id = set.getLong("id");
+                String login = set.getString("login");
+                String senha = set.getString("senha");
+                String cargo = set.getString("cargo");
+                String nome = set.getString("nome_display");
+
+                usuario = new Usuario(id, login, senha, cargo, nome, documento);
             }
 
             set.close();

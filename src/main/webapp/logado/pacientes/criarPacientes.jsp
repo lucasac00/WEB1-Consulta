@@ -14,7 +14,7 @@
         <label for="senha">Senha:</label>
         <input type="password" name="senha" id="senha" required><br>
 
-        <label for="crm">CPF:</label>
+        <label for="cpf">CPF:</label>
         <input type="text" name="cpf" id="cpf" required><br>
 
         <label for="nome">Nome:</label>
