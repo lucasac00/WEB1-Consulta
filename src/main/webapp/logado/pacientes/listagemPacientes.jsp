@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #a8c0ff, #3f2b96);
+            background: linear-gradient(135deg, #c0d9ff, #1a73e8);
             color: #333;
             display: flex;
             flex-direction: column;
@@ -25,8 +25,8 @@
         }
 
         table {
-            width: 80%;
-            max-width: 800px;
+            width: 100%;
+            max-width: 1200px;
             border-collapse: collapse;
             margin-bottom: 20px;
             background: white;
@@ -38,10 +38,11 @@
         th, td {
             padding: 15px;
             text-align: left;
+            white-space: nowrap;
         }
 
         th {
-            background: #9b59b6;
+            background: #1a73e8;
             color: white;
             font-weight: bold;
         }
@@ -57,7 +58,7 @@
         a {
             color: white;
             text-decoration: none;
-            background: #9b59b6;
+            background: #1a73e8;
             padding: 10px 20px;
             border-radius: 5px;
             margin: 10px 5px;
@@ -66,7 +67,7 @@
         }
 
         a:hover {
-            background: #8e44ad;
+            background: #1f15e5;
         }
 
         .actions {
@@ -77,7 +78,7 @@
         .actions a {
             color: white;
             text-decoration: none;
-            background: #9b59b6;
+            background: #1a73e8;
             padding: 8px 16px;
             border-radius: 5px;
             transition: background 0.3s ease;
@@ -89,7 +90,7 @@
         }
 
         .actions a:hover {
-            background: #8e44ad;
+            background: #1f15e5;
         }
 
         .actions a.delete:hover {

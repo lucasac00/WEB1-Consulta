@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #a8c0ff, #3f2b96);
+            background: linear-gradient(135deg, #c0d9ff, #1a73e8);
             color: #333;
             display: flex;
             flex-direction: column;
@@ -54,7 +54,7 @@
             width: 100%;
             padding: 10px;
             margin-top: 20px;
-            background: #9b59b6;
+            background: #1a73e8;
             color: white;
             border: none;
             border-radius: 5px;
@@ -64,7 +64,7 @@
         }
 
         input[type="submit"]:hover {
-            background: #8e44ad;
+            background: #1f15e5;
         }
     </style>
 </head>
