@@ -31,8 +31,10 @@
         </form>
     </div>
 
+    <c:if test="${usuarioLogado == null}">
+        <a href="<c:url value='login' />"><fmt:message key="login" /></a>
+    </c:if>
     <a href="<c:url value='medicos/listagemMedicos' />"><fmt:message key="viewDoctors" /></a>
-    <a href="<c:url value='login' />"><fmt:message key="login" /></a>
     <a href="<c:url value='medicos/listagemEspecialidades' />"><fmt:message key="viewDoctorsBySpecialty" /></a>
     <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
         <a href="<c:url value='pacientes/listagemPacientes' />">Ver Pacientes</a>

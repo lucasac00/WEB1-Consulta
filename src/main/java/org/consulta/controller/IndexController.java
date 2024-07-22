@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "Index", urlPatterns = { "/login", "/logout" })
 public class IndexController extends HttpServlet {
@@ -35,8 +36,10 @@ public class IndexController extends HttpServlet {
                 Usuario usuario = dao.getByLogin(login);
                 if (usuario != null) {
                     if (usuario.getSenha().equalsIgnoreCase(senha)) {
+                        HttpSession session = request.getSession();
                         request.getSession().setAttribute("usuarioLogado", usuario);
-                        String contextPath = request.getContextPath().replace("/", "");
+                        response.sendRedirect(request.getContextPath() + "/index.jsp");
+                        /*String contextPath = request.getContextPath().replace("/", "");
                         request.getSession().setAttribute("contextPath", contextPath);
                         if (usuario.getCargo().equals("admin")) {
                             response.sendRedirect("usuario/"); //ROTA DE ADMIN, REQUISITOS R1 e R2
@@ -44,7 +47,7 @@ public class IndexController extends HttpServlet {
                             response.sendRedirect("paciente/"); //ROTA DE PACIENTE, REQUISITOS R5 e R6
                         } else if (usuario.getCargo().equals("medico")){
                             response.sendRedirect("medico/"); //ROTA DE MEDICO, REQUISITOS R8
-                        }
+                        }*/
                         return;
                     } else {
                         erros.add("Senha inválida!");
