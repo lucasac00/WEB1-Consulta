@@ -66,12 +66,13 @@ public class MedicoController extends HttpServlet {
                 case "/listagemEspecialidades":
                     listagemEspecialidades(request, response);
                     break;
+                case "/listagemConsultas":
+                    verificarAutorizacao(request, response, "medico");
+                    listagemConsultas(request, response);
+                    break;
                 case "/especialidade":
                     listarMedicosPorEspecialidade(request, response);
                     break;
-                case "/listagemConsultas":
-                    //verificarAutorizacao(request, response, "admin");
-                    listagemConsultas(request, response);
                 default:
                 System.out.println("HELLO");
                     lista(request, response);   
