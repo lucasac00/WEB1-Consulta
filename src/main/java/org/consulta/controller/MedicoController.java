@@ -187,7 +187,7 @@ public class MedicoController extends HttpServlet {
             String especialidade = request.getParameter("especialidade");
 
             Usuario usuario = usuarioDao.getByDocumento(og_crm);
-
+          
             if (usuario != null) {
                 Medico medico = new Medico(id, email, senha, crm, nome, especialidade);
                 usuario = new Usuario(usuario.getId(), email, senha, "medico", nome, crm);

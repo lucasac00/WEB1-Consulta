@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><fmt:message key="AddDoctor" /></title>
+    <title><fmt:message key="addDoctor" /></title>
 </head>
 <body>
     <h2><fmt:message key="AddDoctor" /></h2>
