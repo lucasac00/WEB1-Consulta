@@ -132,6 +132,8 @@ public class PacienteController extends HttpServlet {
     }
     //Requisito R5
     private void criarConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Medico> listaMedicos = medicoDao.getAll();
+        request.setAttribute("listaMedicos", listaMedicos);
         if (request.getMethod().equalsIgnoreCase("POST")) {
             String cpf = request.getParameter("cpf");
             String crm = request.getParameter("crm");
