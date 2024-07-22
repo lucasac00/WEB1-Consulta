@@ -1,20 +1,3 @@
-/* 
-=====================================================================
-    TODO:
-        Acho que o email não deveria ser a chava principal, 
-        mas sim o CPF/CRM, pois eles são "mais unicos" e são usados
-        como base nas foreign key da Consulta por exemplo.
-        (se fizer essa alteração, vai ter de alterar nos DAOs tambem)
-        
-        Outro problema é que a Consulta não tem primary key, e portanto,
-        acredito que para identificar cada consulta teria de fazer a
-        concatenação de cpf + crm + datetime. (ou sei la se precisa mesmo)
-
-        DONE
-=====================================================================
-*/
-
-
 DROP DATABASE IF EXISTS Agendamento;
 
 CREATE DATABASE Agendamento;

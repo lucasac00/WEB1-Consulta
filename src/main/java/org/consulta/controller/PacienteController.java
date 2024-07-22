@@ -69,8 +69,11 @@ public class PacienteController extends HttpServlet {
                     //verificarAutorizacao(request, response, "admin");
                     listagemConsultas(request, response);
                     break;
-                case "/agendamento":
+                case "/criarConsulta":
                     apresentaFormCadastro(request, response);
+                    break;
+                case "/confirmarConsulta":
+                    confirmarConsulta(request, response);
                     break;
                 case "/insercao":
                     insere(request, response);
@@ -127,12 +130,43 @@ public class PacienteController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    //Requisito R5
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<Medico> listaMedicos = medicoDao.getAll();
+        request.setAttribute("listaMedicos", listaMedicos);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/formulario.jsp");
         dispatcher.forward(request, response);
     }
+
     //Requisito R5
+    private void confirmarConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /*if (request.getMethod().equalsIgnoreCase("POST")) {
+            request.setCharacterEncoding("UTF-8");
+
+            String cpf = request.getParameter("cpf_paciente");
+            String crm = request.getParameter("crm_medico");
+            String datetime = request.getParameter("data_hora");
+
+            Consulta consulta = new Consulta(cpf, crm, datetime);
+
+            // Lembrar de Fazer a confirmação de que nao teve conflito de horario aqui eu acho
+
+            consultaDao.insert(consulta);
+            response.sendRedirect("lista");
+    
+        } else {*/
+            System.out.println("Chegou no confirmar Consulta");
+            Long id = Long.parseLong(request.getParameter("id"));
+            Medico medico = medicoDao.get(id);
+            request.setAttribute("medico", medico);
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/confirmarConsulta.jsp");
+            dispatcher.forward(request, response);
+        //}
+    }
+
+    //Requisito R5 (coloquei esse insere no if(post) do confirmar consulta, n sei se ta certo)
     private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 

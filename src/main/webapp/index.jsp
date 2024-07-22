@@ -41,8 +41,12 @@
     <c:if test="${usuarioLogado.cargo == 'admin'}">
         <a href="<c:url value='pacientes/listagemPacientes' />"><fmt:message key="viewPatients"/></a>
     </c:if>
+
     <c:if test="${usuarioLogado.cargo == 'paciente'}">
         <a href="<c:url value='pacientes/listagemConsultas?doc=${usuarioLogado.documento}'/>"><fmt:message key="viewConsultas"></fmt:message></a>
+    </c:if>
+    <c:if test="${usuarioLogado.cargo == 'paciente'}">
+        <a href="<c:url value='pacientes/criarConsulta?doc=${usuarioLogado.documento}'/>"><fmt:message key="createConsulta"></fmt:message></a>
     </c:if>
 
     <c:if test="${usuarioLogado.cargo == 'medico'}">
