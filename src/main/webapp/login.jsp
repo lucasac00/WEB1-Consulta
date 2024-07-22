@@ -50,11 +50,11 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" name="bOK" value="<fmt:message key="user.login"/>">
+                    <input type="submit" name="bOK" value="<fmt:message key='user.loginButton'/>">
                 </td>
             </tr>
         </table>
     </form>
-    <a href="${pageContext.request.contextPath}/index.jsp">Home</a>
+    <a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="home" /></a>
 </body>
 </html>

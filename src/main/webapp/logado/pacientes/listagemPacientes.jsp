@@ -1,22 +1,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Listagem de Pacientes</title>
+    <title><fmt:message key="ListPatientPageTitle" /></title>
 </head>
 <body>
-    <h2>Listagem de Pacientes</h2>
+    <h2><fmt:message key="ListPatientPageTitle" /></h2>
     <table border="1">
         <tr>
-            <th>ID</th>
-            <th>Email</th>
-            <th>CPF</th>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>Sexo</th>
-            <th>Data de Nascimento</th>
-            <th>Ações</th>
+            <th><fmt:message key="ListPatientPageID" /></th>
+            <th><fmt:message key="ListPatientPageEmail" /></th>
+            <th><fmt:message key="ListPatientPageCPF" /></th>
+            <th><fmt:message key="ListPatientPageName" /></th>
+            <th><fmt:message key="ListPatientPagePhone" /></th>
+            <th><fmt:message key="ListPatientPageSex" /></th>
+            <th><fmt:message key="ListPatientPageDateOfBirth" /></th>
+            <th><fmt:message key="ListPatientPageActions" /></th>
         </tr>
         <c:forEach var="paciente" items="${listaPacientes}">
             <tr>
@@ -28,13 +29,13 @@
                 <td>${paciente.sexo}</td>
                 <td>${paciente.dataNascimento}</td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/pacientes/editarPacientes?id=${paciente.id}">Editar</a>
-                    <a href="${pageContext.request.contextPath}/pacientes/deletarPacientes?id=${paciente.id}" onclick="return confirm('Tem certeza que deseja deletar?')">Deletar</a>
+                    <a href="${pageContext.request.contextPath}/pacientes/editarPacientes?id=${paciente.id}"><fmt:message key="ListPatientPageEdit" /></a>
+                    <a href="${pageContext.request.contextPath}/pacientes/deletarPacientes?id=${paciente.id}" onclick="return confirm(<fmt:message key='confirmAction' />)"><fmt:message key="ListPatientPageDelete" /></a>
                 </td>
             </tr>
         </c:forEach>
     </table>
-    <a href="${pageContext.request.contextPath}/pacientes/criarPacientes">Adicionar Novo Paciente</a>
-    <a href="${pageContext.request.contextPath}/index.jsp">Home</a>
+    <a href="${pageContext.request.contextPath}/pacientes/criarPacientes"><fmt:message key="ListPatientPageAddNewPatient" /></a>
+    <a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="home" /></a>
 </body>
 </html>
