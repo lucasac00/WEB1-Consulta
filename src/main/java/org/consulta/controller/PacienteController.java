@@ -66,15 +66,15 @@ public class PacienteController extends HttpServlet {
                     listagemPacientes(request, response);
                     break;
                 case "/listagemConsultas":
-                    //verificarAutorizacao(request, response, "paciente");
+                    verificarAutorizacao(request, response, "paciente");
                     listagemConsultas(request, response);
                     break;
                 case "/criarConsulta":
-                    //verificarAutorizacao(request, response, "paciente");
+                    verificarAutorizacao(request, response, "paciente");
                     criarConsulta(request, response);
                     break;
                 default:
-                    lista(request, response);
+                    redirect(request, response);
                     break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
@@ -100,11 +100,8 @@ public class PacienteController extends HttpServlet {
         }
     }
 
-    private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String cpf = request.getParameter("cpf");
-        List<Consulta> lista = consultaDao.getByCpf(cpf);
-        request.setAttribute("listaConsultasPorPaciente", lista);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/lista.jsp");
+    private void redirect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -125,11 +122,6 @@ public class PacienteController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/formulario.jsp");
-        dispatcher.forward(request, response);
-    }
     //Requisito R5
     private void criarConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Medico> listaMedicos = medicoDao.getAll();
