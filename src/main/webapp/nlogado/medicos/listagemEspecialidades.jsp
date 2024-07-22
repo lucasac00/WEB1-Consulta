@@ -12,5 +12,6 @@
             <li><a href="${pageContext.request.contextPath}/medicos/especialidade?nome=${especialidade}">${especialidade}</a></li>
         </c:forEach>
     </ul>
+    <a href="${pageContext.request.contextPath}/index.jsp">Home</a>
 </body>
 </html>
