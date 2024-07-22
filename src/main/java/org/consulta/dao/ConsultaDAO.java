@@ -15,7 +15,7 @@ public class ConsultaDAO extends GenericDAO {
     //CRUD Consulta - Adicionar check se já não existe consulta do mesmo médico e paciente no mesmo horário
     public void insert(Consulta consulta) {
 
-        String sql = "INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora) VALUES (?, ?, ?)";
         // TODO: Conferir se existe CPF e CRM no banco de dados antes de criar consulta
         try {
             Connection conn = this.getConnection();

@@ -137,6 +137,8 @@ public class PacienteController extends HttpServlet {
             String crm = request.getParameter("crm");
             String dataHora = request.getParameter("data_hora");
 
+            System.out.print(cpf + crm + dataHora);
+
             Consulta consulta = new Consulta(cpf, crm, dataHora);
             consultaDao.insert(consulta);
 
