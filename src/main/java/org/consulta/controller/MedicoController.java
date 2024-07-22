@@ -73,6 +73,9 @@ public class MedicoController extends HttpServlet {
                 case "/especialidade":
                     listarMedicosPorEspecialidade(request, response);
                     break;
+                case "/listagemConsultas":
+                    //verificarAutorizacao(request, response, "admin");
+                    listagemConsultas(request, response);
                 default:
                 System.out.println("HELLO");
                     lista(request, response);   
@@ -101,6 +104,7 @@ public class MedicoController extends HttpServlet {
     }
 
 
+    // Substitui esse lista pelo listagemConsultas pra ficar igual ao do lucas
     //Requisito R8
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String crm = request.getParameter("crm");
@@ -140,6 +144,17 @@ public class MedicoController extends HttpServlet {
         request.setAttribute("listaMedicos", listaMedicos);
         request.setAttribute("especialidade", especialidade);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/nlogado/medicos/listagemMedicosPorEspecialidade.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    // R8 - Listar todas as consultas de um medico com base no seu CRM
+    private void listagemConsultas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String doc = request.getParameter("doc");
+        List<Consulta> listaConsultas = consultaDao.getByCrm(doc);
+        System.out.println(doc);
+        System.out.println(listaConsultas.toString());
+        request.setAttribute("listaConsultas", listaConsultas);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medicos/listagemConsultas.jsp");
         dispatcher.forward(request, response);
     }
 

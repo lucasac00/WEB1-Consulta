@@ -127,6 +127,10 @@ VALUES ("medicoGuilherme", "senhaDoGuilherme", "medico", "Dr. Guilherme", "MG-48
 INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)
 VALUES ("45545678901", "SP-36730", "2024-07-22 15:30:00");
 
+-- Consulta da Paciente Joana com o Medico Dr. Joao
+INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)
+VALUES ("97772012614", "SP-36730", "2024-07-22 21:15:00");
+
 -- Consulta da Paciente Joana com a Medica Dra. Maria
 INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)
 VALUES ("97772012614", "AM-45082", "2024-07-22 15:30:00");
