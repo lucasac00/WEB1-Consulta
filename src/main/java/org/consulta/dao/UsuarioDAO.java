@@ -79,7 +79,7 @@ public class UsuarioDAO extends GenericDAO {
     }
 
     public void update (Usuario usuario) {
-        String sql = "UPDATE Usuario SET login = ?, senha = ?, cargo = ?, nome_display = ?, document = ? WHERE id = ?";
+        String sql = "UPDATE Usuario SET login = ?, senha = ?, cargo = ?, nome_display = ?, documento = ? WHERE id = ?";
 
         try {
             Connection connection = this.getConnection();

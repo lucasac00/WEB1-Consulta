@@ -46,7 +46,7 @@
                 <td>${medico.especialidade}</td>
                 <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
                     <td>
-                        <a href="${pageContext.request.contextPath}/medicos/editarMedicos?id=${medico.id}"><fmt:message key="editDoctor" /></a>
+                        <a href="${pageContext.request.contextPath}/medicos/editarMedicos?id=${medico.id}&ogcrm=${medico.crm}"><fmt:message key="editDoctor" /></a>
                         <a href="${pageContext.request.contextPath}/medicos/deletarMedicos?id=${medico.id}" onclick="return confirm(<fmt:message key='confirmAction' />)"><fmt:message key="delete" /></a>
                     </td>
                 </c:if>
