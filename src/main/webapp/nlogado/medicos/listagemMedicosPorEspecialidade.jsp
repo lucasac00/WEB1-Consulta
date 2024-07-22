@@ -10,11 +10,11 @@
     <h2><fmt:message key="doctorsExpertise"/>${especialidade}</h2>
     <table border="1">
         <tr>
-            <th><fmt:message key="id" /></th>
-            <th><fmt:message key="email" /></th>
-            <th><fmt:message key="crm" /></th>
-            <th><fmt:message key="name" /></th>
-            <th><fmt:message key="expertise" /></th>
+            <th><fmt:message key="doctorExpertiseID" /></th>
+            <th><fmt:message key="doctorExpertiseEmail" /></th>
+            <th><fmt:message key="doctorExpertiseCRM" /></th>
+            <th><fmt:message key="doctorExpertiseName" /></th>
+            <th><fmt:message key="doctorExpertiseExpertise" /></th>
             <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
                 <th><fmt:message key="actions" /></th>
             </c:if>
