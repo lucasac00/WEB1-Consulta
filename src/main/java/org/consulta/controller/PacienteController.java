@@ -66,14 +66,12 @@ public class PacienteController extends HttpServlet {
                     listagemPacientes(request, response);
                     break;
                 case "/listagemConsultas":
-                    //verificarAutorizacao(request, response, "admin");
+                    //verificarAutorizacao(request, response, "paciente");
                     listagemConsultas(request, response);
                     break;
-                case "/agendamento":
-                    apresentaFormCadastro(request, response);
-                    break;
-                case "/insercao":
-                    insere(request, response);
+                case "/criarConsulta":
+                    //verificarAutorizacao(request, response, "paciente");
+                    criarConsulta(request, response);
                     break;
                 default:
                     lista(request, response);
@@ -133,16 +131,20 @@ public class PacienteController extends HttpServlet {
         dispatcher.forward(request, response);
     }
     //Requisito R5
-    private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+    private void criarConsulta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getMethod().equalsIgnoreCase("POST")) {
+            String cpf = request.getParameter("cpf");
+            String crm = request.getParameter("crm");
+            String dataHora = request.getParameter("data_hora");
 
-        String cpf = request.getParameter("cpf_paciente");
-        String crm = request.getParameter("crm_medico");
-        String datetime = request.getParameter("data_hora");
+            Consulta consulta = new Consulta(cpf, crm, dataHora);
+            consultaDao.insert(consulta);
 
-        Consulta consulta = new Consulta(cpf, crm, datetime);
-        consultaDao.insert(consulta);
-        response.sendRedirect("lista");
+            response.sendRedirect(request.getContextPath() + "/pacientes/listagemConsultas");
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/criarConsulta.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     private void criarPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
