@@ -168,6 +168,14 @@ public class PacienteController extends HttpServlet {
             String sexo = request.getParameter("sexo");
             String data_nascimento = request.getParameter("data_nascimento");
 
+            Paciente jaExiste = pacienteDao.getByCpf(cpf);
+            if (jaExiste != null) {
+                request.setAttribute("errorMessage", "Um paciente com esse CPF já existe");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/criarPacientes.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
             Usuario usuario = new Usuario(email, senha, "paciente", nome, cpf);
             Paciente paciente = new Paciente(email, senha, cpf, nome, telefone, sexo, data_nascimento);
             usuarioDao.insert(usuario);
@@ -184,6 +192,7 @@ public class PacienteController extends HttpServlet {
     private void editarPacientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getMethod().equalsIgnoreCase("POST")) {
             Long id = Long.parseLong(request.getParameter("id"));
+            String ogcpf = request.getParameter("ogcpf");
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
             String cpf = request.getParameter("cpf");
@@ -192,14 +201,30 @@ public class PacienteController extends HttpServlet {
             String sexo = request.getParameter("sexo");
             String data_nascimento = request.getParameter("data_nascimento");
 
-            Paciente paciente = new Paciente(id, email, senha, cpf, nome, telefone, sexo, data_nascimento);
-            pacienteDao.update(paciente);
-    
-            response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
+            Usuario usuario = usuarioDao.getByDocumento(ogcpf);
+
+            if (usuario != null){
+                Paciente paciente = new Paciente(id, email, senha, cpf, nome, telefone, sexo, data_nascimento);
+                usuario = new Usuario(usuario.getId(), email, senha, "paciente", nome, cpf);
+
+                pacienteDao.update(paciente);
+                usuarioDao.update(usuario);
+
+                response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
+            } else {
+                request.setAttribute("errorMessage", "Usuário com o CPF dado não existe");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medicos/editarPacientes.jsp");
+                dispatcher.forward(request, response);
+            }
+
         } else {
             Long id = Long.parseLong(request.getParameter("id"));
+            String ogcpf = request.getParameter("ogcpf");
+
             Paciente paciente = pacienteDao.get(id);
             request.setAttribute("paciente", paciente);
+            request.setAttribute("ogcpf", ogcpf);
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/pacientes/editarPacientes.jsp");
             dispatcher.forward(request, response);
         }

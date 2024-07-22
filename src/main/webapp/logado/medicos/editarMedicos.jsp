@@ -10,6 +10,7 @@
     <h2><fmt:message key="editDoctor" /></h2>
     <form action="${pageContext.request.contextPath}/medicos/editarMedicos" method="post">
         <input type="hidden" name="id" value="${medico.id}">
+        <input type="hidden" name="ogcrm" value="${ogcrm}" />
         
         <label for="email"><fmt:message key="email" /></label>
         <input type="text" name="email" id="email" value="${medico.email}" required><br>

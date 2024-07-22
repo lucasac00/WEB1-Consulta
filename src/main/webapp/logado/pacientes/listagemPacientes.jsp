@@ -29,7 +29,7 @@
                 <td>${paciente.sexo}</td>
                 <td>${paciente.dataNascimento}</td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/pacientes/editarPacientes?id=${paciente.id}"><fmt:message key="ListPatientPageEdit" /></a>
+                    <a href="${pageContext.request.contextPath}/pacientes/editarPacientes?id=${paciente.id}&ogcpf=${paciente.cpf}"><fmt:message key="ListPatientPageEdit" /></a>
                     <a href="${pageContext.request.contextPath}/pacientes/deletarPacientes?id=${paciente.id}" onclick="return confirm(<fmt:message key='confirmAction' />)"><fmt:message key="ListPatientPageDelete" /></a>
                 </td>
             </tr>
