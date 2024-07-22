@@ -169,6 +169,8 @@ public class MedicoController extends HttpServlet {
 
     private void editarMedicos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getMethod().equalsIgnoreCase("POST")) {
+            Usuario usuario = usuarioDao.getByDocumento("crm");
+
             Long id = Long.parseLong(request.getParameter("id"));
             String email = request.getParameter("email");
             String senha = request.getParameter("senha");
@@ -176,8 +178,11 @@ public class MedicoController extends HttpServlet {
             String nome = request.getParameter("nome");
             String especialidade = request.getParameter("especialidade");
 
-            Usuario usuario = usuarioDao.getByDocumento(crm);
+            System.out.println("\n\n\n\n\n" + crm);
+
     
+            System.out.println("\n\n\n\n\n" + usuario);
+            
             Medico medico = new Medico(id, email, senha, crm, nome, especialidade);
             usuario = new Usuario(usuario.getId(), email, senha, "medico", nome, crm);
 

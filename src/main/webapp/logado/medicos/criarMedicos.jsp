@@ -4,10 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><fmt:message key="AddDoctor" /></title>
+    <title><fmt:message key="addDoctor" /></title>
 </head>
 <body>
-    <h2><fmt:message key="AddDoctor" /></h2>
+    <h2><fmt:message key="addDoctor" /></h2>
     <form action="${pageContext.request.contextPath}/medicos/criarMedicos" method="post">
         <label for="email"><fmt:message key="email" /></label>
         <input type="text" name="email" id="email" required><br>

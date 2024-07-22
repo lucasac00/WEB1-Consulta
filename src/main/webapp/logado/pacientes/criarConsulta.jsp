@@ -20,7 +20,7 @@
   </script>
 
   <body>
-    <h2><fmt:message key="addPatient" /></h2>
+    <h2><fmt:message key="createAppointmentTitle" /></h2>
     <c:if test="${not empty errorMessage}">
       <p style="color: red;">${errorMessage}</p>
     </c:if>
@@ -34,15 +34,15 @@
       <label for="data_hora"><fmt:message key="createAppointmentDateAndTime" /></label>
       <input type="datetime-local" name="data_hora" id="data_hora" required step="1800"><br>
 
-      <input type="submit" value="Adicionar">
+      <input type="submit" value=<fmt:message key="addAppointment" />>
     </form>
     <table border="1">
       <tr>
-        <th>ID</th>
-        <th>Email</th>
-        <th>CRM</th>
-        <th>Nome</th>
-        <th>Especialidade</th>
+        <th><fmt:message key="cid" /></th>
+        <th><fmt:message key="cemail" /></th>
+        <th><fmt:message key="ccrm" /></th>
+        <th><fmt:message key="cname" /></th>
+        <th><fmt:message key="cexpertise" /></th>
         <c:if test="${usuarioLogado.cargo == 'medico' || usuarioLogado.cargo == 'admin'}">
           <th>Ações</th>
         </c:if>
