@@ -68,6 +68,38 @@ public class MedicoDAO extends GenericDAO {
         }
         return listaMedicos;
     }
+
+    // Requisito R4
+    public List<String> getEspecialidadesDistintas() {
+
+        List<String> especialidades = new ArrayList<>();
+
+        String sql = "SELECT DISTINCT especialidade FROM Medico";
+
+        try {
+            Connection conn = this.getConnection();
+            Statement statement = conn.createStatement();
+
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                String especialidadeDiferente = resultSet.getString("especialidade");
+                especialidades.add(especialidadeDiferente);
+            }
+
+            //System.out.println("aaaaaaa");
+            //System.out.println(especialidades);
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return especialidades;
+        
+    }
+
     //Requisito R4
     public List<Medico> getByEspecialidade (String especialidade){
         List<Medico> listaMedicos = new ArrayList<Medico>();

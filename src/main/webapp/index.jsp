@@ -9,5 +9,6 @@
     <h1>Test Page</h1>
     <a href="<c:url value='medicos/listagemMedicos' />">Ver Lista de Médicos</a>
     <a href="<c:url value='login' />">Login</a>
+    <a href="<c:url value='medicos/listagemEspecialidades' />">Ver médicos por Especialidade</a>
 </body>
 </html>

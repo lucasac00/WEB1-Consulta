@@ -60,6 +60,12 @@ public class MedicoController extends HttpServlet {
                 case "/listagemMedicos":
                     listagemMedicos(request, response);
                     break;
+                case "/listagemEspecialidades":
+                    listagemEspecialidades(request, response);
+                    break;
+                case "/especialidade":
+                    listarMedicosPorEspecialidade(request, response);
+                    break;
                 default:
                 System.out.println("HELLO");
                     lista(request, response);   
@@ -102,6 +108,22 @@ public class MedicoController extends HttpServlet {
         List<Medico> listaMedicos = medicoDao.getAll();
         request.setAttribute("listaMedicos", listaMedicos);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/nlogado/medicos/listagemMedicos.jsp");
+        dispatcher.forward(request, response);
+    }
+    // R4 - listar as diferentes especialidades existentes
+    private void listagemEspecialidades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<String> listaEspecialidadesDistintas = medicoDao.getEspecialidadesDistintas();
+        request.setAttribute("listagemEspecialidades", listaEspecialidadesDistintas);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/nlogado/medicos/listagemEspecialidades.jsp");
+        dispatcher.forward(request, response);
+    }
+    // R4 - Listar os medicos com essa especialidade
+    private void listarMedicosPorEspecialidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String especialidade = request.getParameter("nome");
+        List<Medico> listaMedicos = medicoDao.getByEspecialidade(especialidade);
+        request.setAttribute("listaMedicos", listaMedicos);
+        request.setAttribute("especialidade", especialidade);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/nlogado/medicos/listagemMedicosPorEspecialidade.jsp");
         dispatcher.forward(request, response);
     }
 
