@@ -73,9 +73,6 @@ public class MedicoController extends HttpServlet {
                 case "/especialidade":
                     listarMedicosPorEspecialidade(request, response);
                     break;
-                case "/listagemConsultas":
-                    //verificarAutorizacao(request, response, "admin");
-                    listagemConsultas(request, response);
                 default:
                 System.out.println("HELLO");
                     lista(request, response);   
@@ -126,15 +123,6 @@ public class MedicoController extends HttpServlet {
         List<String> listaEspecialidadesDistintas = medicoDao.getEspecialidadesDistintas();
         request.setAttribute("listagemEspecialidades", listaEspecialidadesDistintas);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/nlogado/medicos/listagemEspecialidades.jsp");
-        dispatcher.forward(request, response);
-    }
-    private void listagemConsultas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String doc = request.getParameter("doc");
-        List<Consulta> listaConsultas = consultaDao.getByCrm(doc);
-        System.out.println(doc);
-        System.out.println(listaConsultas.toString());
-        request.setAttribute("listaConsultas", listaConsultas);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/logado/medicos/listagemConsultas.jsp");
         dispatcher.forward(request, response);
     }
     // R4 - Listar os medicos com essa especialidade
