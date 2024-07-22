@@ -133,7 +133,7 @@ VALUES ("97772012614", "SP-36730", "2024-07-22T21:00");
 
 -- Consulta da Paciente Joana com a Medica Dra. Maria
 INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)
-VALUES ("97772012614", "AM-45082", "2024-07-22T15:30");
+VALUES ("97772012614", "AM-45082", "2024-07-22T16:30");
 
 -- Consulta da Paciente Ana com o Medico Dr. Pedro
 INSERT INTO Consulta (cpf_paciente, crm_medico, data_hora)

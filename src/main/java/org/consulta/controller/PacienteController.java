@@ -141,7 +141,7 @@ public class PacienteController extends HttpServlet {
 
             System.out.print(cpf + crm + dataHora);
 
-            boolean check = consultaDao.checkValidity(crm, dataHora);
+            boolean check = consultaDao.checkValidity(crm, dataHora, cpf);
 
             if (check) {
                 Consulta consulta = new Consulta(cpf, crm, dataHora);

@@ -142,12 +142,14 @@ public class ConsultaDAO extends GenericDAO {
         }
     }
 
-    public boolean checkValidity(String crm, String dataHora) {
-        String sql = "SELECT * FROM Consulta WHERE crm_medico = ? AND data_hora = ?";
+    public boolean checkValidity(String crm, String dataHora, String cpf) {
+        String sql = "SELECT * FROM Consulta WHERE (crm_medico = ? AND data_hora = ?) OR (data_hora = ? AND cpf_paciente = ?)";
         try (Connection conn = this.getConnection();
-             PreparedStatement statement = conn.prepareStatement(sql)) {
+                PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, crm);
             statement.setString(2, dataHora);
+            statement.setString(3, dataHora);
+            statement.setString(4, cpf);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return false; // Já existe consulta
