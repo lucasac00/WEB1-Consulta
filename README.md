@@ -1,6 +1,6 @@
 # Trabalho 1 - Agendamento de consultas médicas 
 
-Esse é um projeto feito em servlets para um sistema de agendamento de consultas médicas, para a disciplina Desenvolvimento de Software para Web 
+Esse é um projeto feito em servlets para um sistema de agendamento de consultas médicas, para a disciplina Desenvolvimento de Software para Web 1 
 
 ## JDK 
 
@@ -76,7 +76,7 @@ sudo systemctl start mysql.service
 
 ### configuração do MySQL 
 
-Abra o MySQL CLI 
+Abra o MySQL 
 ```
 sudo mysql
 ```
@@ -112,6 +112,28 @@ Certifique se que o Tomcat esteja ativo,
 
 No diretório raiz, utilize 
 ```
-
+mysql -uroot -p
 ```
 
+Dentro de mysql, use os seguintes comandos, para a criação do banco de dados: 
+```
+source db/MySQL/create.sql
+```
+```
+quit
+```
+
+Após isso, ainda na raiz do diretório, utilize:
+```
+mvn compile
+```
+
+```
+mvn exec:java -Dexec.mainClass="org.consulta.AcessaBD" -Dexec.cleanupDaemonThreads=false
+```
+
+```
+mvn tomcat7:deploy
+```
+
+Agora o projeto pode ser visto em http://localhost:8080, nas aplicações como WEB1-Consulta. Lembrando que o user e a senha do tomcat é admin e admin respectivamente. Isso foi definido anteriormente.
