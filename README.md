@@ -1,6 +1,9 @@
 # Trabalho 1 - Agendamento de consultas médicas 
 
-Esse é um projeto feito em servlets para um sistema de agendamento de consultas médicas, para a disciplina Desenvolvimento de Software para Web 1 
+Esse é um projeto feito em servlets para um sistema de agendamento de consultas médicas, para a disciplina Desenvolvimento de Software para Web 1.
+
+O sistema foi criado de modo a suportar o CRUD dos pacientes e dos Médicos, agendamento de consultas, listagem de médicos e consultas, e internacionalização em 2 linguas. Além disso, diversas restrições foram implementadas para que não houvesse sobreposição de consultas, chaves únicas entre outros. 
+
 
 ## JDK 
 
@@ -32,12 +35,13 @@ Baixar o arquivo zip de http://tomcat.apache.org/. Neste projeto, utilizamos o t
 
 Descompactar em uma pasta sem espaços ou acentos (diretório <instalação tomcat>)
 
-
 Abrir o arquivo conf/tomcat-users.xml (configuração dos usuários)
 
 Modificar conf/tomcat-users.xml, adicionando a seguinte linha antes de ``` </tomcat-users> ``` 
 
+```
 <user username="admin" password="admin" roles="manager-gui, manager-script" />
+```
 
 Esse será o seu login e senha para acessar o tomcat
 
