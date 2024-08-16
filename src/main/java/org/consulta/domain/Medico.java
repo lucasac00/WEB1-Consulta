@@ -79,7 +79,7 @@ public class Medico extends AbstractEntity<Long> {
     }
 
     public void setEspecialidade(String especialidade) {
-        this.email = especialidade;
+        this.especialidade = especialidade;
     }
 }
 
