@@ -1,4 +1,4 @@
-package org.consulta.domain;
+/*package org.consulta.domain;
 
 public class Paciente {
     private Long id;
@@ -97,4 +97,4 @@ public class Paciente {
     public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-}
+}*/

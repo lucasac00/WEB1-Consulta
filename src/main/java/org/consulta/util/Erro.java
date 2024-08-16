@@ -1,3 +1,4 @@
+/*
 package org.consulta.util;
 
 import java.io.Serializable;
@@ -31,3 +32,4 @@ public final class Erro implements Serializable{
         return erros;
     }
 }
+*/

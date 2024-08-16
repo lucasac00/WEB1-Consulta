@@ -1,5 +1,92 @@
 package org.consulta.domain;
 
+import java.math.BigDecimal;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+@SuppressWarnings("serial")
+@Entity
+@Table(name = "Medico")
+public class Medico extends AbstractEntity<Long> {
+
+    @NotBlank(message = "{NotBlank.medico.email}")
+    @Size(max = 60)
+    @Column(nullable = false, length = 60)
+    private String email;
+
+    @NotBlank(message = "{NotBlank.medico.senha}")
+    @Size(max = 60)
+    @Column(nullable = false, length = 60)
+    private String senha;
+
+    @NotBlank(message = "{NotBlank.medico.crm}")
+    @Size(max = 60)
+    @Column(nullable = false, length = 60)
+    private String crm;
+
+    @NotBlank(message = "{NotBlank.medico.nome}")
+    @Size(max = 60)
+    @Column(nullable = false, length = 60)
+    private String nome;
+
+    @NotBlank(message = "{NotBlank.medico.especialidade}")
+    @Size(max = 60)
+    @Column(nullable = false, length = 60)
+    private String especialidade;
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public String getCrm() {
+        return crm;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public void setCrm(String crm) {
+        this.crm = crm;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.email = especialidade;
+    }
+}
+
+
+
+/*package org.consulta.domain;
+
 
 public class Medico {
     private Long id;
@@ -83,4 +170,4 @@ public class Medico {
     public void setEspecialidade(String especialidade) {
         this.especialidade = especialidade;
     }
-}
+}*/

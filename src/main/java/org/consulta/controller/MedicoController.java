@@ -1,4 +1,4 @@
-package org.consulta.controller;
+/*package org.consulta.controller;
 
 import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
@@ -214,4 +214,4 @@ public class MedicoController extends HttpServlet {
     }
 
     
-}
+}*/

@@ -1,4 +1,4 @@
-package org.consulta.controller;
+/*package org.consulta.controller;
 
 import org.consulta.dao.ConsultaDAO;
 import org.consulta.dao.MedicoDAO;
@@ -249,4 +249,4 @@ public class PacienteController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/pacientes/listagemPacientes");
     }
 
-}
+}*/

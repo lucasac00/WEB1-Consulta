@@ -1,3 +1,4 @@
+/*
 package org.consulta.util;
 
 import com.sendgrid.*;
@@ -32,3 +33,4 @@ public class EmailUtil {
         }
     }
 }
+*/

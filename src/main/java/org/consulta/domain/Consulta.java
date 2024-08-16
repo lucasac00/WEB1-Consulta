@@ -1,4 +1,4 @@
-package org.consulta.domain;
+/*package org.consulta.domain;
 
 public class Consulta {
     private int id;
@@ -56,4 +56,4 @@ public class Consulta {
     public void setDataHora(String dataHora) {
         this.dataHora = dataHora;
     }
-}
+}*/

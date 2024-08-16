@@ -133,7 +133,7 @@ mvn compile
 ```
 
 ```
-mvn exec:java -Dexec.mainClass="org.consulta.AcessaBD" -Dexec.cleanupDaemonThreads=false
+mvn exec:java -Dexec.mainClass="org.consulta.ConsultaMvcApplication" -Dexec.cleanupDaemonThreads=false
 ```
 
 ```
