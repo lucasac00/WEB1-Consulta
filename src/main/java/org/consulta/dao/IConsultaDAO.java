@@ -30,7 +30,7 @@ public interface IConsultaDAO extends CrudRepository<Consulta, Long>{
     void deleteByCrm(String crm);
 
     //delete
-    void delete(Consulta consulta);
+    void deleteById(Long id);
 
     //checkValidity
     boolean checkValidity(String crm, String cpf, String dataHora);

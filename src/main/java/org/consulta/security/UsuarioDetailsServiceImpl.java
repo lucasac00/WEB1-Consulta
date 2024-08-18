@@ -10,18 +10,19 @@ import org.consulta.domain.Usuario;
 
 public class UsuarioDetailsServiceImpl implements UserDetailsService {
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private IUsuarioDAO dao;
 
     @Override
     public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
-        Usuario usuario = dao.getUserByUsername(username);
+        throws UsernameNotFoundException {
+            Usuario usuario = dao.getUserByUsername(username);
 
-        if (usuario == null) {
-            throw new UsernameNotFoundException("Could not find user");
-        }
+            if (usuario == null) {
+                throw new UsernameNotFoundException("Could not find user");
+            }
 
-        return new UsuarioDetails(usuario);
+            return new UsuarioDetails(usuario);
     }
 }

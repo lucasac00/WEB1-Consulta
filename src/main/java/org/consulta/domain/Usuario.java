@@ -1,14 +1,16 @@
 package org.consulta.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "Usuario")
 public class Usuario extends AbstractEntity<Long> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank
     @Column(nullable = false, length = 20, unique = true)

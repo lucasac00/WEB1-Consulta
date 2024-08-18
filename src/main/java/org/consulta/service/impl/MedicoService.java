@@ -25,6 +25,8 @@ public class MedicoService implements IMedicoService {
         dao.deleteById(id);
     }
 
+    public void atualizar(Medico medico) {dao.update(medico); }
+
     @Transactional(readOnly = true)
     public Medico buscarPorId(Long id) {
         return dao.findById(id.longValue());
@@ -34,4 +36,15 @@ public class MedicoService implements IMedicoService {
     public List<Medico> buscarTodos() {
         return dao.findAll();
     }
+
+    @Transactional(readOnly = true)
+    public List<Medico> buscarPorEspecialidade(String especialidade) {
+        return dao.findByEspecialidade(especialidade);
+    }
+
+    @Transactional(readOnly = true)
+    public Medico buscarPorCrm(String crm) { return dao.findByCrm(crm); }
+
+    @Transactional(readOnly = true)
+    public List<String> getEspecialidades() { return dao.getEspecialidades(); }
 }

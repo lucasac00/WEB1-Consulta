@@ -13,7 +13,7 @@ public interface IMedicoDAO extends CrudRepository<Medico, Long>{
     Medico findById(long id);
 
     //getByespecialidade
-    Medico findByEspecialidade(String especialidade);
+    List<Medico> findByEspecialidade(String especialidade);
 
     //getByCrm
     Medico findByCrm(String crm);

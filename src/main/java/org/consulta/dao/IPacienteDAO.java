@@ -19,13 +19,13 @@ public interface IPacienteDAO extends CrudRepository<Paciente, Long>{
     List<Paciente> findAll();
 
     //get
-    Consulta get(Long id);
+    Paciente get(Long id);
 
     //getByCpf
-    List<Paciente> findByCpf(String cpf);
+    Paciente findByCpf(String cpf);
 
     //delete
-    void delete(Paciente paciente);
+    void deleteById(Long id);
 }
 
 /*
