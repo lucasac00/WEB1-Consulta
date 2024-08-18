@@ -9,12 +9,28 @@ import org.consulta.domain.Medico;
 @SuppressWarnings("unchecked")
 public interface IMedicoDAO extends CrudRepository<Medico, Long>{
 
+    //get
     Medico findById(long id);
 
+    //getByespecialidade
+    Medico findByEspecialidade(String especialidade);
+
+    //getByCrm
+    Medico findByCrm(String crm);
+
+    //getAll
     List<Medico> findAll();
 
+    //getEspecialidadesDistintas
+    List<String> getEspecialidades();
+
+    //insert
     Medico save(Medico medico);
 
+    //update
+    Medico update(Medico medico);
+
+    //delete
     void deleteById(Long id);
 }
 

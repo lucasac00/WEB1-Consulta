@@ -1,12 +1,26 @@
-/*package org.consulta.domain;
+package org.consulta.domain;
 
-public class Consulta {
-    private int id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
+@Entity
+@Table(name = "Consulta")
+public class Consulta extends AbstractEntity<Long> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotBlank
+    @Column(nullable = false, length = 64)
     private String cpfPaciente;
+    @NotBlank
+    @Column(nullable = false, length = 64)
     private String crmMedico;
+    @NotBlank
+    @Column(nullable = false, length = 64)
     private String dataHora;
 
-    public Consulta(int id) {
+    public Consulta(Long id) {
         this.id = id;
     }
 
@@ -17,7 +31,7 @@ public class Consulta {
         this.dataHora = dataHora;
     }
 
-    public Consulta(int id, String cpfPaciente, String crmMedico, String dataHora) {
+    public Consulta(Long id, String cpfPaciente, String crmMedico, String dataHora) {
         super();
         this.id = id;
         this.cpfPaciente = cpfPaciente;
@@ -25,11 +39,15 @@ public class Consulta {
         this.dataHora = dataHora;
     }
 
-    public int getId() {
+    public Consulta() {
+
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,4 +74,4 @@ public class Consulta {
     public void setDataHora(String dataHora) {
         this.dataHora = dataHora;
     }
-}*/
+}

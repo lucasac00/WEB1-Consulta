@@ -10,15 +10,28 @@ import org.consulta.domain.Usuario;
 @SuppressWarnings("unchecked")
 public interface IUsuarioDAO extends CrudRepository<Usuario, Long> {
 
+    //get
     Usuario findById(long id);
 
+    //getByLogin
+    Usuario findByLogin(String login);
+
+    //getByDocumento
+    Usuario findByDocumento(String documento);
+
+    //getAll
     List<Usuario> findAll();
 
+    //insert
     Usuario save(Usuario usuario);
 
+    //update
+    Usuario update(Usuario usuario);
+
+    //delete
     void deleteById(Long id);
 
-    @Query("SELECT u FROM Usuario u WHERE u.username = :username")
+    @Query("SELECT user FROM Usuario user WHERE user.username = :username")
     public Usuario getUserByUsername(@Param("username") String username);
 }
 

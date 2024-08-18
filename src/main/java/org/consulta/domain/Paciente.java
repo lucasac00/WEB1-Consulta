@@ -1,13 +1,35 @@
-/*package org.consulta.domain;
+package org.consulta.domain;
 
-public class Paciente {
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
+@Entity
+@Table(name = "Paciente")
+public class Paciente extends AbstractEntity<Long>{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
+    @Column(nullable = false, length = 64)
     private String email;
+    @NotBlank
+    @Column(nullable = false, length = 64)
     private String senha;
+    @NotBlank
+    @Column(nullable = false, length = 64)
     private String cpf;
+    @NotBlank
+    @Column(nullable = false, length = 64)
     private String nome;
+    @NotBlank
+    @Column(nullable = false, length = 64)
     private String telefone;
+    @NotBlank
+    @Column(nullable = false, length = 64)
     private String sexo;
+    @NotBlank
+    @Column(nullable = false, length = 64)
     private String dataNascimento;
 
     public Paciente(Long id) {this.id = id;}
@@ -32,6 +54,10 @@ public class Paciente {
         this.telefone = telefone;
         this.sexo = sexo;
         this.dataNascimento = dataNascimento;
+    }
+
+    public Paciente() {
+
     }
 
     public Long getId() {
@@ -97,4 +123,4 @@ public class Paciente {
     public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-}*/
+}

@@ -1,6 +1,42 @@
-/*
 package org.consulta.dao;
 
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import org.consulta.domain.Consulta;
+
+@SuppressWarnings("unchecked")
+public interface IConsultaDAO extends CrudRepository<Consulta, Long>{
+    //insert
+    Consulta save(Consulta consulta);
+
+    //update
+    Consulta update(Consulta consulta);
+
+    //getAll
+    List<Consulta> findAll();
+
+    //get
+    Consulta get(Long id);
+
+    //getByCpf
+    List<Consulta> findByCpf(String cpf);
+
+    //getByCrm
+    List<Consulta> findByCrm(String crm);
+
+    //deleteByCrm
+    void deleteByCrm(String crm);
+
+    //delete
+    void delete(Consulta consulta);
+
+    //checkValidity
+    boolean checkValidity(String crm, String cpf, String dataHora);
+}
+
+/*
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
