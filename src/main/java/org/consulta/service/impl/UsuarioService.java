@@ -21,11 +21,11 @@ public class UsuarioService implements IUsuarioService {
     public Usuario buscarPorId(Long id) { return dao.findById(id.longValue()); }
 
     @Transactional(readOnly = true)
-    public Usuario buscarPorLogin(String login) { return dao.findByLogin(login); }
+    public Usuario buscarPorLogin(String login) { return dao.findByUsername(login); }
 
     @Transactional(readOnly = true)
     public Usuario buscarPorDocumento(String documento) {
-        return dao.findByDocumento(documento);
+        return dao.findByCpf(documento);
     }
 
     @Transactional(readOnly = true)
@@ -33,7 +33,7 @@ public class UsuarioService implements IUsuarioService {
 
     public void salvar(Usuario usuario) { dao.save(usuario); }
 
-    public void atualizar(Usuario usuario) { dao.update(usuario); }
+    public void atualizar(Usuario usuario) { dao.save(usuario); }
 
     public void excluir(Long id) { dao.deleteById(id); }
 }

@@ -12,10 +12,10 @@ public class Consulta extends AbstractEntity<Long> {
     private Long id;
     @NotBlank
     @Column(nullable = false, length = 64)
-    private String cpfPaciente;
+    private String cpf;
     @NotBlank
     @Column(nullable = false, length = 64)
-    private String crmMedico;
+    private String crm;
     @NotBlank
     @Column(nullable = false, length = 64)
     private String dataHora;
@@ -24,18 +24,18 @@ public class Consulta extends AbstractEntity<Long> {
         this.id = id;
     }
 
-    public Consulta(String cpfPaciente, String crmMedico, String dataHora) {
+    public Consulta(String cpf, String crm, String dataHora) {
         super();
-        this.cpfPaciente = cpfPaciente;
-        this.crmMedico = crmMedico;
+        this.cpf = cpf;
+        this.crm = crm;
         this.dataHora = dataHora;
     }
 
-    public Consulta(Long id, String cpfPaciente, String crmMedico, String dataHora) {
+    public Consulta(Long id, String cpf, String crm, String dataHora) {
         super();
         this.id = id;
-        this.cpfPaciente = cpfPaciente;
-        this.crmMedico = crmMedico;
+        this.cpf = cpf;
+        this.crm = crm;
         this.dataHora = dataHora;
     }
 
@@ -51,20 +51,20 @@ public class Consulta extends AbstractEntity<Long> {
         this.id = id;
     }
 
-    public String getCpfPaciente() {
-        return cpfPaciente;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCpfPaciente(String cpfPaciente) {
-        this.cpfPaciente = cpfPaciente;
+    public void setCpf(String cpfPaciente) {
+        this.cpf = cpfPaciente;
     }
 
-    public String getCrmMedico() {
-        return crmMedico;
+    public String getCrm() {
+        return crm;
     }
 
-    public void setCrmMedico(String crmMedico) {
-        this.crmMedico = crmMedico;
+    public void setCrm(String crmMedico) {
+        this.crm = crmMedico;
     }
 
     public String getDataHora() {

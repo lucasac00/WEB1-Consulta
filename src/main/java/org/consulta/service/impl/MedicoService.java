@@ -25,7 +25,7 @@ public class MedicoService implements IMedicoService {
         dao.deleteById(id);
     }
 
-    public void atualizar(Medico medico) {dao.update(medico); }
+    public void atualizar(Medico medico) {dao.save(medico); }
 
     @Transactional(readOnly = true)
     public Medico buscarPorId(Long id) {

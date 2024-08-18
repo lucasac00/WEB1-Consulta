@@ -14,10 +14,10 @@ public interface IUsuarioDAO extends CrudRepository<Usuario, Long> {
     Usuario findById(long id);
 
     //getByLogin
-    Usuario findByLogin(String login);
+    Usuario findByUsername(String username);
 
     //getByDocumento
-    Usuario findByDocumento(String documento);
+    Usuario findByCpf(String cpf);
 
     //getAll
     List<Usuario> findAll();
@@ -26,7 +26,7 @@ public interface IUsuarioDAO extends CrudRepository<Usuario, Long> {
     Usuario save(Usuario usuario);
 
     //update
-    Usuario update(Usuario usuario);
+    //Usuario update(Usuario usuario);
 
     //delete
     void deleteById(Long id);

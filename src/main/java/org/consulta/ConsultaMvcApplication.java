@@ -1,7 +1,5 @@
 package org.consulta;
 
-import java.math.BigDecimal;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,7 +27,7 @@ public class ConsultaMvcApplication {
             Usuario u1 = new Usuario();
             u1.setUsername("admin");
             u1.setPassword(encoder.encode("admin"));
-            u1.setCPF("012.345.678-90");
+            u1.setCpf("012.345.678-90");
             u1.setName("Administrador");
             u1.setRole("ROLE_ADMIN");
             u1.setEnabled(true);

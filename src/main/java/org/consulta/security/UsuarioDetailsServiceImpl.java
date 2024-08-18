@@ -7,10 +7,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.consulta.dao.IUsuarioDAO;
 import org.consulta.domain.Usuario;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UsuarioDetailsServiceImpl implements UserDetailsService {
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private IUsuarioDAO dao;
 

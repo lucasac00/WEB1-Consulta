@@ -20,7 +20,7 @@ public class PacienteService {
 
     public void salvar(Paciente paciente) { dao.save(paciente); }
 
-    public void atualizar(Paciente paciente) { dao.update(paciente); }
+    public void atualizar(Paciente paciente) { dao.save(paciente); }
 
     public void excluir(Long id) { dao.deleteById(id); }
 
@@ -28,7 +28,7 @@ public class PacienteService {
     public List<Paciente> buscarTodos() { return dao.findAll(); }
 
     @Transactional(readOnly = true)
-    public Paciente buscarPorId(Long id) { return dao.get(id); }
+    public Paciente buscarPorId(long id) { return dao.findById(id); }
 
     @Transactional(readOnly = true)
     public Paciente buscarPorCpf(String cpf) { return dao.findByCpf(cpf); }

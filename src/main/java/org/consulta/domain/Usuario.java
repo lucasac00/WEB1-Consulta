@@ -26,7 +26,7 @@ public class Usuario extends AbstractEntity<Long> {
 
     @NotBlank
     @Column(nullable = false, length = 14)
-    private String CPF;
+    private String cpf;
 
     @NotBlank
     @Column(nullable = false, length = 10)
@@ -60,12 +60,12 @@ public class Usuario extends AbstractEntity<Long> {
     }
 
 
-    public String getCPF() {
-        return CPF;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCPF(String cPF) {
-        CPF = cPF;
+    public void setCpf(String cPF) {
+        cpf = cPF;
     }
 
     public String getRole() {

@@ -19,7 +19,7 @@ public class ConsultaService {
 
     public void salvar(Consulta consulta) { dao.save(consulta); }
 
-    public void atualizar(Consulta consulta) { dao.update(consulta); }
+    public void atualizar(Consulta consulta) { dao.save(consulta); }
 
     public void excluir(Long id) { dao.deleteById(id); }
 
@@ -29,7 +29,7 @@ public class ConsultaService {
     public List<Consulta> buscarTodos() { return dao.findAll(); }
 
     @Transactional(readOnly = true)
-    public Consulta buscarPorId(Long id) { return dao.get(id); }
+    public Consulta buscarPorId(long id) { return dao.findById(id); }
 
     @Transactional(readOnly = true)
     public List<Consulta> buscarPorCpf(String cpf) { return dao.findByCpf(cpf); }
