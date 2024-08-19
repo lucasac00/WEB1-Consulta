@@ -93,16 +93,16 @@
         <a th:href="@{/medicos/listagemEspecialidades}" th:text="#{viewDoctorsBySpecialty}">View Doctors by Specialty</a>
 
         
-        <div th:if="${usuarioLogado.role == 'admin'}">
+        <div th:if="${usuarioLogado.role == 'ROLE_ADMIN'}">
             <a th:href="@{/pacientes/listagemPacientes}" th:text="#{viewPatients}">View Patients</a>
         </div>
-        <div th:if="${usuarioLogado.role == 'paciente'}">
+        <div th:if="${usuarioLogado.role == 'ROLE_PACIENTE'}">
             <a th:href="@{/pacientes/listagemConsultas(doc=${usuarioLogado.documento})}" th:text="#{viewConsultas}">View Consultations</a>
         </div>
-        <div th:if="${usuarioLogado.role == 'paciente'}">
+        <div th:if="${usuarioLogado.role == 'ROLE_PACIENTE'}">
             <a th:href="@{/pacientes/criarConsulta(doc=${usuarioLogado.documento})}" th:text="#{addConsultas}">Add Consultation</a>
         </div>
-        <div th:if="${usuarioLogado.role == 'medico'}">
+        <div th:if="${usuarioLogado.role == 'ROLE_MEDICO'}">
             <a th:href="@{/medicos/listagemConsultas(doc=${usuarioLogado.documento})}" th:text="#{viewConsultas}">View Consultations</a>
         </div> 
     </div>  

@@ -35,7 +35,7 @@ public class IndexController {
             String username = authentication.getName();
             Usuario usuario = usuarioService.buscarPorLogin(username);
             if (usuario != null) {
-                System.out.println("Usuario found: " + usuario.getUsername());
+                System.out.println("Usuario found: " + usuario.getRole());
             } else {
                 System.out.println("Usuario not found for username: " + username);
             }
