@@ -90,7 +90,7 @@
         </div> 
 
         <a th:href="@{/medicos/listagemMedicos}" th:text="#{viewDoctors}">View Doctors</a>
-        <a th:href="@{/medicos/listagemEspecialidades}" th:text="#{viewDoctorsBySpecialty}">View Doctors by Specialty</a>
+        <a th:href="@{/medicos/especialidade}" th:text="#{viewDoctorsBySpecialty}">View Doctors by Specialty</a>
 
         
         <div th:if="${usuarioLogado.role == 'admin'}">
