@@ -68,15 +68,16 @@
     <h1 th:text="#{title}">Title</h1>
 
     <div class="language-selection">
-        <form th:action="@{/}" method="post">
+        <form th:action="@{/}" method="get"> 
             <input type="hidden" name="lang" value="en">
             <input type="submit" value="English">
         </form>
-        <form th:action="@{/}" method="post">
+        <form th:action="@{/}" method="get">
             <input type="hidden" name="lang" value="pt">
             <input type="submit" value="Português">
         </form>
     </div>
+    
 
     <div class="links">
         <div th:if="${usuarioLogado == null}">
