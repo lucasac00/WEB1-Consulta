@@ -1,68 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <title>Listagem de Médicos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #a8c0ff, #3f2b96);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .table-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3f2b96;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-<section class="layout-content" layout:fragment="corpo">
-
-    <nav class="navbar navbar-expand-md bg-light">
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <i class="oi oi-caret-right"></i>
-                    <span th:text="#{medico.listar.label}"></span>
-                </li>
-            </ul>
-            <!-- <a class="btn btn-primary btn-md" th:href="@{/editoras/cadastrar}" role="button">
-                <span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span>
-                <span th:text="#{editora.cadastrar.label}"></span>
-            </a> -->
-        </div>
-    </nav>
-
-    <div class="container" id="listagem">
-
-        <div th:replace="~{fragments/alert}"></div>
-
-        <div class="table-responsive">
-            <table class="table table-striped table-hover table-sm">
-                <thead>
+    <div class="table-container">
+        <h1>Lista de Médicos</h1>
+        
+        <table>
+            <thead>
                 <tr>
-                    <th>#</th>
-                    <th th:text="#{medico.email.label}"></th>
-                    <th th:text="#{medico.senha.label}"></th>
-                    <th th:text="#{medico.crm.label}"></th>
-                    <th th:text="#{medico.nome.label}"></th>
-                    <th th:text="#{medico.especialidade.label}"></th>
+                    <th>Nome</th>
+                    <th>Especialidade</th>
+                    <th>CRM</th>
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 <tr th:each="medico : ${medicos}">
-                    <th th:text="#{medico.email}"></th>
-                    <th th:text="#{medico.senha}"></th>
-                    <th th:text="#{medico.crm}"></th>
-                    <th th:text="#{medico.nome}"></th>
-                    <th th:text="#{medico.especialidade}"></th>
-                    <!--<td colspan="2">
-                        <a class="btn btn-info btn-sm" th:href="@{/editoras/editar/{id} (id=${editora.id}) }"
-                           role="button">
-                            <span class="oi oi-brush" th:title="#{link.editar.label}" aria-hidden="true"> </span>
-                        </a>
-                        <button
-                                th:id="${'btn_editoras/excluir/' + editora.id}"
-                                type="button" class="btn btn-danger btn-sm"
-                                data-toggle="modal" data-target="#myModal">
-                            <span class="oi oi-circle-x" th:title="#{link.excluir.label}" aria-hidden="true"></span>
-                        </button>
-                    </td> !-->
+                    <td th:text="${medico.nome}"></td>
+                    <td th:text="${medico.especialidade}"></td>
+                    <td th:text="${medico.crm}"></td>
                 </tr>
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
-
-    <div th:replace="~{fragments/modal::modal}"></div>
-</section>
 </body>
 </html>

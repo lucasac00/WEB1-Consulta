@@ -1,0 +1,31 @@
+<!-- src/main/resources/templates/pacientes/listagemConsultas.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem de Consultas</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2>Listagem de Consultas</h2>
+    <a th:href="@{/pacientes/criarConsulta}">Marcar Nova Consulta</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Data e Hora</th>
+                <th>Médico</th>
+                <th>Paciente</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="consulta : ${consultas}">
+                <td th:text="${consulta.id}"></td>
+                <td th:text="${consulta.dataHora}"></td>
+                <td th:text="${consulta.medico.nome}"></td>
+                <td th:text="${consulta.paciente.nome}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

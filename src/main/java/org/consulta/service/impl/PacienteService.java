@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = false)
-public class PacienteService {
+public class PacienteService implements IPacienteService{
 
     @Autowired
     IPacienteDAO dao;
@@ -24,12 +24,15 @@ public class PacienteService {
 
     public void excluir(Long id) { dao.deleteById(id); }
 
+    @Override
     @Transactional(readOnly = true)
     public List<Paciente> buscarTodos() { return dao.findAll(); }
 
+    @Override
     @Transactional(readOnly = true)
-    public Paciente buscarPorId(long id) { return dao.findById(id); }
+    public Paciente buscarPorId(Long id) { return dao.findById(id).orElse(null); }
 
+    @Override
     @Transactional(readOnly = true)
     public Paciente buscarPorCpf(String cpf) { return dao.findByCpf(cpf); }
 }

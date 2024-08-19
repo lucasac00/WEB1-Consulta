@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{title}">Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #a8c0ff, #3f2b96);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .language-selection {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .language-selection form {
+            margin: 0;
+        }
+
+        .language-selection input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .language-selection input[type="submit"]:hover {
+            background: #ddd;
+        }
+
+        .links a {
+            display: block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .links a:hover {
+            background: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1 th:text="#{title}">Title</h1>
+
+    <div class="language-selection">
+        <form th:action="@{/}" method="post">
+            <input type="hidden" name="lang" value="en">
+            <input type="submit" value="English">
+        </form>
+        <form th:action="@{/}" method="post">
+            <input type="hidden" name="lang" value="pt">
+            <input type="submit" value="Português">
+        </form>
+    </div>
+
+    <div class="links">
+        <div th:if="${usuarioLogado == null}">
+            <a th:href="@{/login}" th:text="#{login}">Login</a>
+        </div>
+
+
+        <div th:if="${usuarioLogado != null}">
+            <a th:href="@{/logout}" th:text="#{logout}">Logout</a>
+        </div> 
+
+        <a th:href="@{/medicos/listagemMedicos}" th:text="#{viewDoctors}">View Doctors</a>
+        <a th:href="@{/medicos/listagemEspecialidades}" th:text="#{viewDoctorsBySpecialty}">View Doctors by Specialty</a>
+
+        
+        <div th:if="${usuarioLogado.role == 'admin'}">
+            <a th:href="@{/pacientes/listagemPacientes}" th:text="#{viewPatients}">View Patients</a>
+        </div>
+        <div th:if="${usuarioLogado.role == 'paciente'}">
+            <a th:href="@{/pacientes/listagemConsultas(doc=${usuarioLogado.documento})}" th:text="#{viewConsultas}">View Consultations</a>
+        </div>
+        <div th:if="${usuarioLogado.role == 'paciente'}">
+            <a th:href="@{/pacientes/criarConsulta(doc=${usuarioLogado.documento})}" th:text="#{addConsultas}">Add Consultation</a>
+        </div>
+        <div th:if="${usuarioLogado.role == 'medico'}">
+            <a th:href="@{/medicos/listagemConsultas(doc=${usuarioLogado.documento})}" th:text="#{viewConsultas}">View Consultations</a>
+        </div> 
+    </div>  
+</body>
+</html>

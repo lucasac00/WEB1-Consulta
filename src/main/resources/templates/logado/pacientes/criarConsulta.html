@@ -1,0 +1,33 @@
+<!-- src/main/resources/templates/pacientes/criarConsulta.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Consulta</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2>Criar Consulta</h2>
+    <form th:action="@{/pacientes/criarConsulta}" method="post">
+        <div>
+            <label for="cpf">CPF do Paciente:</label>
+            <input type="text" id="cpf" name="cpf" />
+        </div>
+        <div>
+            <label for="crm">CRM do Médico:</label>
+            <input type="text" id="crm" name="crm" />
+        </div>
+        <div>
+            <label for="dataHora">Data e Hora:</label>
+            <input type="datetime-local" id="dataHora" name="dataHora" />
+        </div>
+        <div>
+            <input type="submit" value="Criar Consulta" />
+        </div>
+        <div th:if="${errorMessage != null}">
+            <p th:text="${errorMessage}" style="color: red;"></p>
+        </div>
+    </form>
+    <a href="/pacientes/listagemConsultas">Voltar</a>
+</body>
+</html>

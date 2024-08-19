@@ -35,16 +35,12 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
-    }
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/error", "/login/**", "/js/**").permitAll()
+                        .requestMatchers("/index", "/error", "/login/**", "/js/**").permitAll()
                         .requestMatchers("/css/**", "/image/**", "/webjars/**").permitAll()
                         .requestMatchers("/consultasPaciente/**").hasRole("PACIENTE")
                         .requestMatchers("/consultasMedico/**").hasRole("MEDICO")
@@ -52,9 +48,15 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/index", true)
+                        .failureHandler((request, response, exception) -> {
+                            request.getSession().setAttribute("error", "Invalid username or password");
+                            response.sendRedirect("/login?error=true");
+                        })
                         .permitAll())
                 .logout((logout) -> logout
-                        .logoutSuccessUrl("/").permitAll());
+                        .logoutSuccessUrl("/login?logout")
+                        .permitAll());
 
         return http.build();
     }

@@ -12,10 +12,10 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = false)
-public class ConsultaService {
+public class ConsultaService implements IConsultaService{
 
     @Autowired
-    IConsultaDAO dao;
+    private IConsultaDAO dao;
 
     public void salvar(Consulta consulta) { dao.save(consulta); }
 
@@ -25,18 +25,23 @@ public class ConsultaService {
 
     public void excluirPorCrm(String crm) { dao.deleteByCrm(crm); }
 
+    @Override
     @Transactional(readOnly = true)
     public List<Consulta> buscarTodos() { return dao.findAll(); }
 
+    @Override
     @Transactional(readOnly = true)
-    public Consulta buscarPorId(long id) { return dao.findById(id); }
+    public Consulta buscarPorId(Long id) { return dao.findById(id).orElse(null); }
 
+    @Override
     @Transactional(readOnly = true)
     public List<Consulta> buscarPorCpf(String cpf) { return dao.findByCpf(cpf); }
 
+    @Override
     @Transactional(readOnly = true)
     public List<Consulta> buscarPorCrm(String crm) { return dao.findByCrm(crm); }
 
+    @Override
     @Transactional(readOnly = true)
     public boolean checkValidity(String crm, String cpf, String dataHora) {
         return dao.checkValidity(crm, cpf, dataHora);
