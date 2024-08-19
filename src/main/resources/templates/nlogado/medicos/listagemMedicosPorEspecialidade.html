@@ -114,7 +114,7 @@
                 <th th:text="#{doctorExpertiseCRM}"></th>
                 <th th:text="#{doctorExpertiseName}"></th>
                 <th th:text="#{doctorExpertiseExpertise}"></th>
-                <th th:if="${usuarioLogado.cargo == 'ROLE_MEDICO' || usuarioLogado.cargo == 'ROLE_ADMIN'}" th:text="#{actions}"></th>
+                <!-- <th th:if="${usuarioLogado.cargo == 'ROLE_MEDICO' || usuarioLogado.cargo == 'ROLE_ADMIN'}" th:text="#{actions}"></th> -->
             </tr>
         </thead>
         <tbody>
@@ -124,21 +124,21 @@
                 <td th:text="${medico.crm}"></td>
                 <td th:text="${medico.nome}"></td>
                 <td th:text="${medico.especialidade}"></td>
-                <td th:if="${usuarioLogado.cargo == 'ROLE_MEDICO' || usuarioLogado.cargo == 'ROLE_ADMIN'}" class="actions">
+                <!-- <td th:if="${usuarioLogado.cargo == 'ROLE_MEDICO' || usuarioLogado.cargo == 'ROLE_ADMIN'}" class="actions">
                     <a th:href="@{/medicos/editarMedicos(id=${medico.id})}" class="edit" th:text="#{edit}"></a>
                     <a th:href="@{/medicos/deletarMedicos(id=${medico.id})}"
                     class="delete"
                     onclick="return confirm('[[${confirmAction}]]')"
                     th:text="#{delete}"></a>
-                </td>
+                </td> -->
             </tr>
         </tbody>
     </table>
-    <div th:if="${usuarioLogado.cargo == 'ROLE_MEDICO' || usuarioLogado.cargo == 'ROLE_ADMIN'}">
+    <!-- <div th:if="${usuarioLogado.cargo == 'ROLE_MEDICO' || usuarioLogado.cargo == 'ROLE_ADMIN'}">
         <a th:href="@{/medicos/criarMedicos}" class="button" th:text="#{addDoctor}"></a>
     </div>
     <div class="link-container">
         <a th:href="@{/index}" class="button" th:text="#{home}"></a>
-    </div>
+    </div> -->
 </body>
 </html>

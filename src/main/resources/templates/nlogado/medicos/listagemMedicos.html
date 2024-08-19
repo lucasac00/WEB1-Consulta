@@ -48,18 +48,18 @@
 </head>
 <body>
     <div class="table-container">
-        <h1>Lista de Médicos</h1>
-
+        <h1><th th:text="#{doctorsList}"> </th></h1>
+        
         <table>
             <thead>
                 <tr>
-                    <th>Nome</th>
-                    <th>Especialidade</th>
-                    <th>CRM</th>
+                    <th th:text="#{lname}"> </th>
+                    <th th:text="#{lexpertise}"> </th>
+                    <th th:text="#{lcrm}"> </th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="medico : ${medicos}">
+                <tr th:each="medico : ${listaMedicos}">
                     <td th:text="${medico.nome}"></td>
                     <td th:text="${medico.especialidade}"></td>
                     <td th:text="${medico.crm}"></td>
