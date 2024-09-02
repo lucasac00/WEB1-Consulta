@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{ListPatientPageTitle}">Listar Pacientes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #a8c0ff, #3f2b96);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 80%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background: #9b59b6;
+            color: white;
+            font-weight: bold;
+        }
+
+        td {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            background: #9b59b6;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 10px 5px;
+            transition: background 0.3s ease;
+            display: inline-block;
+        }
+
+        a:hover {
+            background: #8e44ad;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions a {
+            color: white;
+            text-decoration: none;
+            background: #9b59b6;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .actions a.delete {
+            background: #e74c3c;
+        }
+
+        .actions a:hover {
+            background: #8e44ad;
+        }
+
+        .actions a.delete:hover {
+            background: #c0392b;
+        }
+
+        .link-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h2 th:text="#{ListPatientPageTitle}">Listar Pacientes</h2>
+<table>
+    <thead>
+    <tr>
+        <!-- <th th:text="#{ListPatientPageID}">ID</th> -->
+        <th th:text="#{ListPatientPageEmail}">Email</th>
+        <th th:text="#{ListPatientPageCPF}">CPF</th>
+        <th th:text="#{ListPatientPageName}">Nome</th>
+        <th th:text="#{ListPatientPagePhone}">Telefone</th>
+        <th th:text="#{ListPatientPageSex}">Sexo</th>
+        <th th:text="#{ListPatientPageDateOfBirth}">Data de Nascimento</th>
+        <th th:text="#{ListPatientPageActions}">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="paciente : ${listaPacientes}">
+        <td th:text="${paciente.email}"></td>
+        <td th:text="${paciente.cpf}"></td>
+        <td th:text="${paciente.nome}"></td>
+        <td th:text="${paciente.telefone}"></td>
+        <td th:text="${paciente.sexo}"></td>
+        <td th:text="${paciente.dataNascimento}"></td>
+        <td class="actions">
+            <a th:href="@{/pacientes/editarPacientes/{id}(id=${paciente.id})}" th:text="#{ListPatientPageEdit}">Editar</a>
+            <a th:href="@{/pacientes/deletarPacientes/{id}(id=${paciente.id})}" class="delete" th:onclick="'return confirm(\'' + #{confirmAction} + '\')'" th:text="#{ListPatientPageDelete}">Excluir</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="link-container">
+    <a th:href="@{/pacientes/criarPacientes}" th:text="#{ListPatientPageAddNewPatient}">Adicionar Novo Paciente</a>
+    <a th:href="@{/index}" th:text="#{home}">Início</a>
+</div>
+</body>
+</html>
