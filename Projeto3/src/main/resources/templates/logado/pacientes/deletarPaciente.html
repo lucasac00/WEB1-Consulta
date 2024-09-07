@@ -1,0 +1,17 @@
+<!-- src/main/resources/templates/admin/paciente/deletar.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Deletar Paciente</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h2>Confirmar Deleção</h2>
+    <p>Tem certeza de que deseja deletar o paciente <span th:text="${paciente.nome}"></span>?</p>
+    <form th:action="@{/pacientes/deletar/{id}(id=${paciente.id})}" method="post">
+        <input type="submit" value="Confirmar" />
+    </form>
+    <a href="/pacientes/listar">Cancelar</a>
+</body>
+</html>

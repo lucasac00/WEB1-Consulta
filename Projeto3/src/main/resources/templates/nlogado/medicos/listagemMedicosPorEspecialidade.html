@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{doctorExpertiseList}"></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #a8c0ff, #3f2b96);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 90%;
+            max-width: 1000px;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background: #9b59b6;
+            color: white;
+            font-weight: bold;
+        }
+
+        td {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions a {
+            color: white;
+            text-decoration: none;
+            background: #9b59b6;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .actions a.edit {
+            background: #9b59b6;
+        }
+
+        .actions a.delete {
+            background: #e74c3c;
+        }
+
+        .actions a:hover {
+            background: #8e44ad;
+        }
+
+        .actions a.delete:hover {
+            background: #c0392b;
+        }
+
+        a.button {
+            color: white;
+            text-decoration: none;
+            background: #9b59b6;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+            margin: 10px 5px;
+            display: inline-block;
+        }
+
+        a.button:hover {
+            background: #8e44ad;
+        }
+
+        .link-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            background: #9b59b6;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+    <h2 th:text="#{doctorsExpertise} + ' ' + ${especialidade}"></h2>
+    <table>
+        <thead>
+            <tr>
+                <th th:text="#{doctorExpertiseEmail}"></th>
+                <th th:text="#{doctorExpertiseCRM}"></th>
+                <th th:text="#{doctorExpertiseName}"></th>
+                <th th:text="#{doctorExpertiseExpertise}"></th>
+                <!-- <th th:if="${usuarioLogado.cargo == 'ROLE_MEDICO' || usuarioLogado.cargo == 'ROLE_ADMIN'}" th:text="#{actions}"></th> -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="medico : ${listaMedicos}">
+                <!-- <td th:if="${usuarioLogado.cargo == 'ROLE_ADMIN'}" th:text="${medico.email}"></td> -->
+                <td th:text="${medico.email}"></td>
+                <td th:text="${medico.crm}"></td>
+                <td th:text="${medico.name}"></td>
+                <td th:text="${medico.especialidade}"></td>
+                <!-- <td th:if="${usuarioLogado.cargo == 'ROLE_MEDICO' || usuarioLogado.cargo == 'ROLE_ADMIN'}" class="actions">
+                    <a th:href="@{/medicos/editarMedicos(id=${medico.id})}" class="edit" th:text="#{edit}"></a>
+                    <a th:href="@{/medicos/deletarMedicos(id=${medico.id})}"
+                    class="delete"
+                    onclick="return confirm('[[${confirmAction}]]')"
+                    th:text="#{delete}"></a>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="nav-links">
+        <a th:href="@{/index}" th:text="#{home}"></a>
+    </div>
+    <!-- <div th:if="${usuarioLogado.cargo == 'ROLE_MEDICO' || usuarioLogado.cargo == 'ROLE_ADMIN'}">
+        <a th:href="@{/medicos/criarMedicos}" class="button" th:text="#{addDoctor}"></a>
+    </div> -->
+</body>
+</html>
