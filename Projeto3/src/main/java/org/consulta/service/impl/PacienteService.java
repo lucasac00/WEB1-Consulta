@@ -37,5 +37,9 @@ public class PacienteService implements IPacienteService{
 
     @Override
     @Transactional(readOnly = true)
-    public Paciente buscarPorUsername(String username) { return dao.findByCpf(username); }
+    public Paciente buscarPorUsername(String username) { return dao.findByUsername(username); }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Paciente buscarPorEmail(String email) { return dao.findByEmail(email); }
 }

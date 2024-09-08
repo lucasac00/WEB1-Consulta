@@ -29,6 +29,7 @@ public class PacienteRestController {
     }
 
     //Todo: mensagem para email igual
+    // Feito ^^ :D
     // Cria um novo paciente
     @PostMapping
     public ResponseEntity<?> criarPaciente(@RequestBody Paciente paciente) {
@@ -41,7 +42,13 @@ public class PacienteRestController {
         Paciente jaExisteUsername = pacienteService.buscarPorUsername(paciente.getUsername());
         if (jaExisteUsername != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Um paciente com esse username já existe.");
+                    .body("Um paciente com esse Username já existe.");
+        }
+
+        Paciente jaExisteEmail = pacienteService.buscarPorEmail(paciente.getEmail());
+        if (jaExisteEmail != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Um paciente com esse Email já existe.");
         }
 
         // Validações de tamanho dos campos

@@ -43,12 +43,21 @@ public class MedicoRestController {
     }
 
     //TODO: Adicionar mensagem como a de CRM para username e email igual
+    // Feito ^^ :D
     // Cria um novo médico
     @PostMapping
     public ResponseEntity<?> criarMedico(@RequestBody Medico medico) {
         if (medicoService.buscarPorCrm(medico.getCrm()) != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Um médico com esse CRM já existe.");
+        }
+        if (medicoService.buscarPorUsername(medico.getUsername()) != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Um médico com esse Username já existe.");
+        }
+        if (medicoService.buscarPorEmail(medico.getEmail()) != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Um médico com esse Email já existe.");
         }
         try {
             medicoService.salvar(medico);
@@ -96,7 +105,7 @@ public class MedicoRestController {
     }
 
     // Lista médicos por especialidade
-    @GetMapping("/especialidade/{nome}")
+    @GetMapping("/especialidades/{nome}")
     public ResponseEntity<List<Medico>> listarMedicosPorEspecialidade(@PathVariable String nome) {
         List<Medico> listaMedicos = medicoService.buscarPorEspecialidade(nome);
         return ResponseEntity.ok(listaMedicos);

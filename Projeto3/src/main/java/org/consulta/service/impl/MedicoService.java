@@ -46,5 +46,11 @@ public class MedicoService implements IMedicoService {
     public Medico buscarPorCrm(String crm) { return dao.findByCrm(crm); }
 
     @Transactional(readOnly = true)
+    public Medico buscarPorUsername(String username) { return dao.findByUsername(username); }
+
+    @Transactional(readOnly = true)
+    public Medico buscarPorEmail(String email) { return dao.findByEmail(email); }
+
+    @Transactional(readOnly = true)
     public List<String> getEspecialidades() { return dao.getEspecialidades(); }
 }

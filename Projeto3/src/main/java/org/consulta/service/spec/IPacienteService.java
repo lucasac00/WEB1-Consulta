@@ -19,4 +19,6 @@ public interface IPacienteService {
     List<Paciente> buscarTodos();
 
     Paciente buscarPorUsername(String username);
+
+    Paciente buscarPorEmail(String email);
 }

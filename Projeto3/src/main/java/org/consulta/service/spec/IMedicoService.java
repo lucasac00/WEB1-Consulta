@@ -16,6 +16,12 @@ public interface IMedicoService {
     Medico buscarPorCrm(String crm);
 
     //done
+    Medico buscarPorUsername(String username);
+
+    //done
+    Medico buscarPorEmail(String email);
+
+    //done
     List<Medico> buscarTodos();
 
     //done
