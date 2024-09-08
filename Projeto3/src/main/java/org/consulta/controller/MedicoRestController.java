@@ -108,7 +108,9 @@ public class MedicoRestController {
     
         // Atualizando os campos do médico existente com os dados do médico atualizado
         medicoExistente.setName(medicoAtualizado.getName());
+        // medicoExistente.setPassword(medicoAtualizado.getPassword());
         medicoExistente.setCrm(medicoAtualizado.getCrm());
+        medicoExistente.setEspecialidade(medicoAtualizado.getEspecialidade());
         medicoExistente.setEmail(medicoAtualizado.getEmail());
         medicoExistente.setUsername(medicoAtualizado.getUsername());
 

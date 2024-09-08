@@ -22,5 +22,7 @@ public interface IConsultaService {
 
     List<Consulta> buscarPorCrm(String crm);
 
+    
+
     boolean checkValidity(String crm, String cpf, String dataHora);
 }

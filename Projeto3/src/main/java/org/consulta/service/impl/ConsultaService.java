@@ -41,6 +41,7 @@ public class ConsultaService implements IConsultaService{
     @Transactional(readOnly = true)
     public List<Consulta> buscarPorCrm(String crm) { return dao.findByCrm(crm); }
 
+    
     @Override
     @Transactional(readOnly = true)
     public boolean checkValidity(String crm, String cpf, String dataHora) {
