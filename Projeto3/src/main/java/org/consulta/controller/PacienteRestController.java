@@ -116,6 +116,13 @@ public class PacienteRestController {
                     .body("O cpf já está sendo utilizado por outro paciente.");
         }
 
+        // Verifica se o email já está sendo utilizado por outro paciente
+        Paciente pacienteComMesmoEmail = pacienteService.buscarPorEmail(pacienteAtualizado.getEmail());
+        if (pacienteComMesmoEmail != null && !pacienteComMesmoEmail.getId().equals(id)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("O email já está sendo utilizado por outro paciente.");
+        }
+
         // Atualiza o paciente existente com os novos dados
         pacienteExistente.setEmail(pacienteAtualizado.getEmail());
         pacienteExistente.setSenha(pacienteAtualizado.getSenha());
