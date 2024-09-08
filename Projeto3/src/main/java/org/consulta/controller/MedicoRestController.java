@@ -82,12 +82,37 @@ public class MedicoRestController {
     // Atualiza um médico existente
     @PutMapping("/{id}")
     public ResponseEntity<?> editarMedico(@PathVariable long id, @RequestBody Medico medicoAtualizado) {
-        Medico medico = medicoService.buscarPorId(id);
-        if (medico == null) {
+        Medico medicoExistente = medicoService.buscarPorId(id);
+        if (medicoExistente == null) {
             return ResponseEntity.notFound().build();
         }
+    
+        // Verificações para evitar duplicidade de CRM, Username e Email
+        Medico medicoComMesmoCrm = medicoService.buscarPorCrm(medicoAtualizado.getCrm());
+        if (medicoComMesmoCrm != null && medicoComMesmoCrm.getId() != id) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Um médico com esse CRM já existe.");
+        }
+    
+        Medico medicoComMesmoUsername = medicoService.buscarPorUsername(medicoAtualizado.getUsername());
+        if (medicoComMesmoUsername != null && medicoComMesmoUsername.getId() != id) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Um médico com esse Username já existe.");
+        }
+    
+        Medico medicoComMesmoEmail = medicoService.buscarPorEmail(medicoAtualizado.getEmail());
+        if (medicoComMesmoEmail != null && medicoComMesmoEmail.getId() != id) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Um médico com esse Email já existe.");
+        }
+    
+        // Atualizando os campos do médico existente com os dados do médico atualizado
+        medicoExistente.setName(medicoAtualizado.getName());
+        medicoExistente.setCrm(medicoAtualizado.getCrm());
+        medicoExistente.setEmail(medicoAtualizado.getEmail());
+        medicoExistente.setUsername(medicoAtualizado.getUsername());
 
-        medicoService.salvar(medicoAtualizado);
+        medicoService.salvar(medicoExistente);
         return ResponseEntity.ok().build();
     }
 
