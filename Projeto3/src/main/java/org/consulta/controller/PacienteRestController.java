@@ -78,13 +78,15 @@ public class PacienteRestController {
         }
     }
 
-    // Retorna um paciente específico por ID
+    // Retorna um paciente específico por ID, e se ele n for encontrado, retorna a string explicando o erro
     @GetMapping("/{id}")
-    public ResponseEntity<Paciente> buscarPacientePorId(@PathVariable Long id) {
+    public ResponseEntity<?> buscarPacientePorId(@PathVariable Long id) {
         Paciente paciente = pacienteService.buscarPorId(id);
         if (paciente == null) {
+            //return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            //        .body(null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
+                .body("Paciente com o ID " + id + " não encontrado.");
         }
         return ResponseEntity.ok(paciente);
     }

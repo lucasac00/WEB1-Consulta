@@ -72,12 +72,14 @@ public class MedicoRestController {
         }
     }
 
-    // Retorna um médico específico por ID
+    // Retorna um médico específico por ID, e se ele n for encontrado, retorna a string explicando o erro
     @GetMapping("/{id}")
-    public ResponseEntity<Medico> buscarMedicoPorId(@PathVariable long id) {
+    public ResponseEntity<?> buscarMedicoPorId(@PathVariable long id) {
         Medico medico = medicoService.buscarPorId(id);
         if (medico == null) {
-            return ResponseEntity.notFound().build();
+            //return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Médico com o ID " + id + " não encontrado.");
         }
         return ResponseEntity.ok(medico);
     }
@@ -87,7 +89,9 @@ public class MedicoRestController {
     public ResponseEntity<?> editarMedico(@PathVariable long id, @RequestBody Medico medicoAtualizado) {
         Medico medicoExistente = medicoService.buscarPorId(id);
         if (medicoExistente == null) {
-            return ResponseEntity.notFound().build();
+            //return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Médico com o ID " + id + " não encontrado para ser editado.");
         }
     
         // Verificações para evitar duplicidade de CRM, Username e Email

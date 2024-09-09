@@ -46,10 +46,12 @@ public class ConsultaRestController {
 
     // Retorna uma consulta específica por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Consulta> buscarConsultaPorId(@PathVariable Long id) {
+    public ResponseEntity<?> buscarConsultaPorId(@PathVariable Long id) {
         Consulta consulta = consultaService.buscarPorId(id);
         if (consulta == null) {
-            return ResponseEntity.notFound().build();
+            //return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Consulta de id " + id + " não encontrada.");
         }
         return ResponseEntity.ok(consulta);
     }
@@ -65,7 +67,9 @@ public class ConsultaRestController {
 
         Consulta consulta = consultaService.buscarPorId(id);
         if (consulta == null) {
-            return ResponseEntity.notFound().build();
+            //return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Consulta não encontrada.");
         }
 
         consultaService.atualizar(consultaAtualizada);
@@ -77,7 +81,9 @@ public class ConsultaRestController {
     public ResponseEntity<?> deletarConsulta(@PathVariable Long id) {
         Consulta consulta = consultaService.buscarPorId(id);
         if (consulta == null) {
-            return ResponseEntity.notFound().build();
+            //return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Consulta de id não encontrada.");
         }
 
         consultaService.excluir(id);
@@ -86,15 +92,29 @@ public class ConsultaRestController {
 
     // Retorna consultas por CPF
     @GetMapping("/clientes/{cpf}")
-    public ResponseEntity<List<Consulta>> listarConsultasPorCpf(@PathVariable String cpf) {
+    public ResponseEntity<?> listarConsultasPorCpf(@PathVariable String cpf) {
         List<Consulta> listaConsultas = consultaService.buscarPorCpf(cpf);
+
+        if (listaConsultas == null || listaConsultas.isEmpty()) {
+            // Retorna uma mensagem de erro personalizada quando não houver consultas para o CPF
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Nenhuma consulta encontrada para o cliente de identificacao: " + cpf);
+        }
+
         return ResponseEntity.ok(listaConsultas);
     }
 
     // Retorna consultas por CRM
     @GetMapping("/profissionais/{crm}")
-    public ResponseEntity<List<Consulta>> listarConsultasPorCrm(@PathVariable String crm) {
+    public ResponseEntity<?> listarConsultasPorCrm(@PathVariable String crm) {
         List<Consulta> listaConsultas = consultaService.buscarPorCrm(crm);
+
+        if (listaConsultas == null || listaConsultas.isEmpty()) {
+            // Retorna uma mensagem de erro personalizada quando não houver consultas para o CPF
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Nenhuma consulta encontrada para o profissional de identificacao: " + crm);
+        }
+
         return ResponseEntity.ok(listaConsultas);
     }
 }
