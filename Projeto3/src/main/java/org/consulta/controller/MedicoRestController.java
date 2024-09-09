@@ -42,8 +42,6 @@ public class MedicoRestController {
         return ResponseEntity.ok(listaEspecialidades);
     }
 
-    //TODO: Adicionar mensagem como a de CRM para username e email igual
-    // Feito ^^ :D
     // Cria um novo médico
     @PostMapping
     public ResponseEntity<?> criarMedico(@RequestBody Medico medico) {
@@ -58,6 +56,12 @@ public class MedicoRestController {
         if (medicoService.buscarPorEmail(medico.getEmail()) != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Um médico com esse Email já existe.");
+        }
+        if(medico.getEmail().length() > 60 || medico.getUsername().length() > 60 ||
+            medico.getCrm().length() > 60 || medico.getPassword().length() > 60 ||
+            medico.getName().length() > 60 || medico.getEspecialidade().length() > 60) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Você está com uma entrada longa demais.");
         }
         try {
             medicoService.salvar(medico);
@@ -78,7 +82,6 @@ public class MedicoRestController {
         return ResponseEntity.ok(medico);
     }
 
-    //TODO: Adicionar mensagens para CRM Username e Email já existente
     // Atualiza um médico existente
     @PutMapping("/{id}")
     public ResponseEntity<?> editarMedico(@PathVariable long id, @RequestBody Medico medicoAtualizado) {
@@ -104,6 +107,13 @@ public class MedicoRestController {
         if (medicoComMesmoEmail != null && medicoComMesmoEmail.getId() != id) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Um médico com esse Email já existe.");
+        }
+
+        if(medicoAtualizado.getEmail().length() > 60 || medicoAtualizado.getUsername().length() > 60 ||
+            medicoAtualizado.getCrm().length() > 60 || medicoAtualizado.getPassword().length() > 60 ||
+            medicoAtualizado.getName().length() > 60 || medicoAtualizado.getEspecialidade().length() > 60) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Você está com uma entrada longa demais.");
         }
     
         // Atualizando os campos do médico existente com os dados do médico atualizado

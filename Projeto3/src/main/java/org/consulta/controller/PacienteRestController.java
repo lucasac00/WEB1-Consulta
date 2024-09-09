@@ -28,8 +28,6 @@ public class PacienteRestController {
         return ResponseEntity.ok(pacientes);
     }
 
-    //Todo: mensagem para email igual
-    // Feito ^^ :D
     // Cria um novo paciente
     @PostMapping
     public ResponseEntity<?> criarPaciente(@RequestBody Paciente paciente) {
@@ -91,7 +89,6 @@ public class PacienteRestController {
         return ResponseEntity.ok(paciente);
     }
 
-    //Todo: mensagem para email igual
     // Atualiza um paciente existente
     @PutMapping("/{id}")
     public ResponseEntity<?> editarPaciente(@PathVariable Long id, @RequestBody Paciente pacienteAtualizado) {
@@ -121,6 +118,15 @@ public class PacienteRestController {
         if (pacienteComMesmoEmail != null && !pacienteComMesmoEmail.getId().equals(id)) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body("O email já está sendo utilizado por outro paciente.");
+        }
+
+        // Validações de tamanho dos campos
+        if(pacienteAtualizado.getCpf().length() > 64 || pacienteAtualizado.getEmail().length() > 64 ||
+            pacienteAtualizado.getNome().length() > 64 || pacienteAtualizado.getSenha().length() > 64 ||
+            pacienteAtualizado.getSexo().length() > 64 || pacienteAtualizado.getTelefone().length() > 64 ||
+            pacienteAtualizado.getUsername().length() > 64) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Você está com uma entrada longa demais.");
         }
 
         // Atualiza o paciente existente com os novos dados
